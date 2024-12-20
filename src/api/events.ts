@@ -8,12 +8,12 @@ interface Event {
   description?: string;
   start: { dateTime?: string; date?: string };
   end: { dateTime?: string; date?: string };
-  [key: string]: any; // For additional properties
+  additionalProperties?: Record<string, unknown>; // Updated type
 }
 
 interface CalendarResponse {
   items: Event[];
-  [key: string]: any;
+  additionalProperties?: Record<string, unknown>; // Updated type
 }
 
 export default async function handler(

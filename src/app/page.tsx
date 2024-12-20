@@ -27,7 +27,7 @@ export default function Home() {
         } else {
           setEvents(data.events);
         }
-      } catch (err) {
+      } catch {
         setError('An unexpected error occurred.');
       } finally {
         setLoading(false);
