@@ -1,22 +1,11 @@
 "use client"
 // pages/index.tsx
 
-import { useEffect, useState } from 'react';
 import { NavbarComponent } from '../components/navbar';
 import AnnouncementCarousel from '@/components/announcement-carousel';
 
-interface Event {
-  id: string;
-  summary: string;
-  description?: string;
-  start: { dateTime?: string; date?: string };
-  end: { dateTime?: string; date?: string };
-}
 
 export default function Home() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   const announcements = [
     {
@@ -38,26 +27,6 @@ export default function Home() {
       content: 'The office will be closed for maintenance on January 25th. All employees are encouraged to work from home on this day.'
     }
   ]
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const res = await fetch('/api/events');
-        const data = await res.json();
-        if (!res.ok) {
-          setError(data.error || 'Failed to fetch events.');
-        } else {
-          setEvents(data.events);
-        }
-      } catch {
-        setError('An unexpected error occurred.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvents();
-  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
