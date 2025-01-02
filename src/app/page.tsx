@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { NavbarComponent } from '../components/navbar';
+import AnnouncementCarousel from '@/components/announcement-carousel';
 
 interface Event {
   id: string;
@@ -16,6 +17,27 @@ export default function Home() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const announcements = [
+    {
+      id: '1',
+      title: 'Company All-Hands Meeting',
+      date: new Date('2024-01-15'),
+      content: 'Join us for our monthly all-hands meeting where we will discuss Q4 results and upcoming initiatives for the new year.'
+    },
+    {
+      id: '2',
+      title: 'New Product Launch',
+      date: new Date('2024-01-20'),
+      content: 'We are excited to announce the launch of our new product line. Join the product team for a live demo and Q&A session.'
+    },
+    {
+      id: '3',
+      title: 'Office Closure Notice',
+      date: new Date('2024-01-25'),
+      content: 'The office will be closed for maintenance on January 25th. All employees are encouraged to work from home on this day.'
+    }
+  ]
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -40,32 +62,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <NavbarComponent />
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Upcoming Karate Classes</h1>
-        {loading && <p>Loading events...</p>}
-        {error && <p className="text-red-500">{error}</p>}
-        {!loading && !error && (
-          <ul>
-            {events.map((event) => (
-              <li key={event.id} className="mb-4 p-4 bg-gray-800 rounded">
-                <h2 className="text-xl font-semibold">{event.summary}</h2>
-                <p className="text-sm text-gray-400">
-                  {event.start.dateTime
-                    ? new Date(event.start.dateTime).toLocaleString()
-                    : event.start.date}
-                  {' - '}
-                  {event.end.dateTime
-                    ? new Date(event.end.dateTime).toLocaleString()
-                    : event.end.date}
-                </p>
-                {event.description && (
-                  <p className="mt-2">{event.description}</p>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </main>
+      <AnnouncementCarousel announcements={announcements} />
     </div>
   );
 }
