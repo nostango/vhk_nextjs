@@ -24,10 +24,10 @@ export default function AnnouncementCarousel() {
         const data = await res.json()
         const items = JSON.parse(data.body)
 
-        const filtered = items.filter((item: any) => item.CalendarId === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+        const filtered = items.filter((item: { CalendarId: string }) => item.CalendarId === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
 
         // 3) Map to the shape your carousel needs
-        const announcementsData = filtered.map((item: any) => ({
+        const announcementsData = filtered.map((item: { EventName: string, Timestamp: string, ClassDescriptionEN?: string }) => ({
           id: item.EventName,           // or some unique ID from DynamoDB
           title: item.EventName,
           date: new Date(item.Timestamp),
