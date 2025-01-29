@@ -43,3 +43,7 @@ next-env.d.ts
 .amplify
 amplify_outputs*
 amplifyconfiguration*
+
+# lambda function for calendar listener
+/lambda_function
+lambda_function.zip

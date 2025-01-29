@@ -3,35 +3,47 @@
 
 import { NavbarComponent } from '../components/navbar';
 import AnnouncementCarousel from '@/components/announcement-carousel';
+import InstructorSummary from '@/components/instructor-summary';
+import cInstructorImage from '/public/images/c_instructor.jpg';
+import yInstructorImage from '/public/images/y_instructor.jpg';
+import aInstructorImage from '/public/images/a_instructor.jpg';
 
 
 export default function Home() {
 
-  const announcements = [
+  const instructors = [
     {
-      id: '1',
-      title: 'Company All-Hands Meeting',
-      date: new Date('2024-01-15'),
-      content: 'Join us for our monthly all-hands meeting where we will discuss Q4 results and upcoming initiatives for the new year.'
+      name: "Sensei Antonio Valenzuela",
+      biography: "biography",
+      imageUrl: cInstructorImage,
     },
     {
-      id: '2',
-      title: 'New Product Launch',
-      date: new Date('2024-01-20'),
-      content: 'We are excited to announce the launch of our new product line. Join the product team for a live demo and Q&A session.'
+      name: "Sensei Yoas Valenzuela",
+      biography: "other bio...",
+      imageUrl: yInstructorImage,
     },
     {
-      id: '3',
-      title: 'Office Closure Notice',
-      date: new Date('2024-01-25'),
-      content: 'The office will be closed for maintenance on January 25th. All employees are encouraged to work from home on this day.'
-    }
+      name: "Sensei Abigail Valenzuela",
+      biography: "I started karate when I was 6 Years old. I would watch my dad and my brother do karate and it fascinated me and caught my interest in how they can do combat and defend themselves at ease as well as how they worked on all these different techniques. I never expected to get far in karate, but today I'm a black belt getting ready for my first dan. I enjoy sparring and doing Martial Art technique because you can feel safe around the open world knowing you know how to defend yourself.",
+      imageUrl: aInstructorImage,
+    },
   ]
 
   return (
     <div className="min-h-screen bg-black text-white">
       <NavbarComponent />
-      <AnnouncementCarousel announcements={announcements} />
+      <AnnouncementCarousel />
+      <div className="flex justify-center items-center min-h-screen bg-black text-white">
+        <iframe
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&showTabs=0&showTz=0&showCalendars=0&showTitle=0&showNav=0&src=NmY5OWI2NTlkNWQ1YTVkNWE2MTg2YzFkYWFhYTVmYTg5ZTY0MTI4NWU4MWMyNThkNzZlMjMwODcyN2RkYmQxY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NzhjNWJiM2RjOWYyY2Q4NjVmZTBiMWU3NTFkNDQxODMzZTdlZWNiZjhmOWUxMDBlMGRhMjFhZmVmZDY4YWVjZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Zjg1YjcwYzdkMjBkOTI2ZTQ4YWExMjZmN2JiYzI4NDUyZjhmOTU5MDA1MzJlYTQ2YWUzN2FhYTVlYzg4ZmExZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFlNzljMDI0YWQ5ZDliNDk1NTdiZDVkYWUyZTQyZTE5ZDFmNzQ1NWNhOTkxMDczMmQzMjYzODQ4MDg2ZWQ3MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NjZjNzAxZWUxYTRlYzMzNjhlODI0YmUzZjhhNDdlNjBiYjIzZTM5ZGVjMDFkNjU3YWMyZGNjNTZmYWI1ZmYxMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=N2MwOTYxZWQzMTNkNThmMTUyZjVlMWU1Njg2YzUwZjdiMTUxYjJlNmIyNWM2NDBlNDE0NWU4OTBhODE0MWY3YkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23AD1457&color=%233F51B5&color=%23AD1457&color=%238E24AA&color=%230B8043&color=%23E4C441&color=%230B8043"
+          style={{ border: 'solid 1px #777' }}
+          width="800"
+          height="600"
+          frameBorder="0"
+          scrolling="no"
+          />
+      </div>
+      <InstructorSummary instructors={instructors} />
     </div>
   );
 }

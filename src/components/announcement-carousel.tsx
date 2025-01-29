@@ -5,17 +5,43 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
 
-interface AnnouncementCarouselProps {
-  announcements: {
-    id: string
-    title: string
-    date: Date
-    content: string
-  }[]
+interface AnnouncementItem {
+  id: string
+  title: string
+  date: Date
+  content: string
 }
 
-export default function AnnouncementCarousel({ announcements }: AnnouncementCarouselProps) {
+export default function AnnouncementCarousel() {
+  const [announcements, setAnnouncements] = useState<AnnouncementItem[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  // 1) Fetch from your "GetSchedule" Lambda endpoint on mount
+  useEffect(() => {
+    async function fetchAnnouncements() {
+      try {
+        const res = await fetch('https://moik8i7sua.execute-api.us-east-1.amazonaws.com/default/pullSchedule')
+        const data = await res.json()
+        const items = JSON.parse(data.body)
+
+        const filtered = items.filter((item: any) => item.CalendarId === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+
+        // 3) Map to the shape your carousel needs
+        const announcementsData = filtered.map((item: any) => ({
+          id: item.EventName,           // or some unique ID from DynamoDB
+          title: item.EventName,
+          date: new Date(item.Timestamp),
+          content: item.ClassDescriptionEN || 'No description available',
+        }))
+
+        setAnnouncements(announcementsData)
+      } catch (error) {
+        console.error('Error fetching announcements:', error)
+      }
+    }
+
+    fetchAnnouncements()
+  }, [])
 
   // Auto-scroll functionality
   useEffect(() => {
