@@ -7,10 +7,10 @@ import { Menu } from 'lucide-react'
 import Image from 'next/image';
 
 const navItems = [
-  { name: 'About', href: '/about' },
-  { name: 'Calendar', href: '/calendar' },
-  { name: 'Classes', href: '/classes' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'About', href: '#about' },
+  { name: 'Calendar', href: '#calendar' },
+  { name: 'Classes', href: '#classes' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export function NavbarComponent() {
