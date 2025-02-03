@@ -63,14 +63,36 @@ export default function ClassList() {
                 e.description === description_en && 
                 e.eventAges === event_ages
                 );
-                if (!existingEvent) {
-                groupedClassesMap[calendarID].events.push({
-                    eventName: event_name,
-                    times: `${recurrence} - ${times}`,
-                    description: description_en || 'No description available',
-                    eventAges: event_ages || 'No age range provided',
-                });
-                }
+                const data = await res.json();
+                const items = JSON.parse(data.body);
+
+                const groupedClassesMap: Record<string, GroupedClasses> = {};
+
+                items.forEach((item: { calendarID: string; calendar_name: string; description_en: string; event_color: string; event_name: string; recurrence: string; times: string; event_ages: string }) => {
+                    const { calendarID, calendar_name, description_en, event_color, event_name, recurrence, times, event_ages } = item;
+
+                    if (!groupedClassesMap[calendarID]) {
+                        groupedClassesMap[calendarID] = {
+                            calendarName: calendar_name,
+                            eventColor: event_color || '#ffffff',
+                            events: [{
+                                eventName: event_name,
+                                times: `${recurrence} - ${times}`,
+                                description: description_en || 'No description available',
+                                eventAges: event_ages || 'No age range provided',
+                            }],
+                        };
+                    } else {
+                        const existingEvent = groupedClassesMap[calendarID].events.find(e => e.eventName === event_name && e.description === description_en && e.eventAges === event_ages);
+                        if (!existingEvent) {
+                            groupedClassesMap[calendarID].events.push({
+                                eventName: event_name,
+                                times: `${recurrence} - ${times}`,
+                                description: description_en || 'No description available',
+                                eventAges: event_ages || 'No age range provided',
+                            });
+                        }
+                    }
             }
             });
     
@@ -123,7 +145,7 @@ export default function ClassList() {
     return (
         <div className="flex flex-col items-center w-full">
             {classes.map((klass, index) => (
-                <Card key={index} className="w-full max-w-2xl p-4 bg-gray-900 text-white relative">
+                <Card key={index} className="w-full max-w-2xl p-4 bg-dark-100 text-white relative">
                     {/* Color Circle in Top Right */}
                     <div 
                         className="absolute top-5 right-5 w-12 h-12 rounded-full border border-white" 

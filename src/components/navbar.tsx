@@ -24,7 +24,7 @@ export function NavbarComponent() {
           {/* Logo */}
           <div className="text-2xl font-bold">
             <Link href="/">
-              <Image src="/images/Valenzuela_Logo_White.png" alt="Logo" width={150} height={150} className="h-16 w-auto" />
+              <Image src="/images/Valenzuela_Logo_White.png" alt="Logo" width={150} height={150} className="h-16 w-auto" priority />
             </Link>
           </div>
 
