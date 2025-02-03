@@ -8,17 +8,6 @@ import {
     CardContent,
 } from '@/components/ui/card';
 
-interface ClassEvent {
-    calendarID: string;
-    calendar_name: string;
-    description_en: string;
-    event_color: string;
-    event_name: string;
-    recurrence: string;
-    times: string;
-    event_ages: string;
-}
-
 interface GroupedClasses {
     calendarName: string;
     eventColor: string;
@@ -43,7 +32,7 @@ export default function ClassList() {
 
                 const groupedClassesMap: Record<string, GroupedClasses> = {};
 
-                items.forEach((item: any) => {
+                items.forEach((item: { calendarID: string; calendar_name: string; description_en: string; event_color: string; event_name: string; recurrence: string; times: string; event_ages: string }) => {
                     const { calendarID, calendar_name, description_en, event_color, event_name, recurrence, times, event_ages } = item;
 
                     if (!groupedClassesMap[calendarID]) {

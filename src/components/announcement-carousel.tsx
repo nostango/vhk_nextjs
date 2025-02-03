@@ -24,9 +24,17 @@ export default function AnnouncementCarousel() {
         const data = await res.json()
         const items = JSON.parse(data.body)
 
-        const filtered = items.filter((item: any) => item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+        interface ScheduleItem {
+          calendarID: string
+          eventID: string
+          event_name: string
+          Timestamp: string
+          description_en?: string
+        }
 
-        const announcementsData = filtered.map((item: any) => ({
+        const filtered = items.filter((item: ScheduleItem) => item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+
+        const announcementsData = filtered.map((item: ScheduleItem) => ({
           id: item.eventID,           // or some unique ID from DynamoDB
           title: item.event_name,
           start_date: new Date(item.Timestamp),
