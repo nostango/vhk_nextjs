@@ -28,8 +28,6 @@ export default function ClassList() {
                 const data = await res.json();
                 const items = JSON.parse(data.body);
 
-                console.log('Fetched classes:', items);
-
                 const groupedClassesMap: Record<string, GroupedClasses> = {};
 
                 items.forEach((item: { calendarID: string; calendar_name: string; description_en: string; event_color: string; event_name: string; recurrence: string; times: string; event_ages: string }) => {
@@ -78,7 +76,7 @@ export default function ClassList() {
     return (
         <div className="flex flex-col items-center w-full">
             {classes.map((klass, index) => (
-                <Card key={index} className="w-full max-w-2xl p-4 bg-gray-900 text-white relative">
+                <Card key={index} className="w-full max-w-2xl p-4 bg-dark-100 text-white relative">
                     {/* Color Circle in Top Right */}
                     <div 
                         className="absolute top-5 right-5 w-12 h-12 rounded-full border border-white" 
