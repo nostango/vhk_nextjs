@@ -20,7 +20,7 @@ export default function InstructorSummary({ instructors }: InstructorSummaryProp
               src={instructor.imageUrl}
               alt={`Portrait of ${instructor.name}`}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1000px) 50vw, 20vw"
               className="object-cover"
             />
           </div>

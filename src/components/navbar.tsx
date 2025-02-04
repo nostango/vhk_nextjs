@@ -7,10 +7,10 @@ import { Menu } from 'lucide-react'
 import Image from 'next/image';
 
 const navItems = [
-  { name: 'About', href: '/about' },
-  { name: 'Calendar', href: '/calendar' },
-  { name: 'Classes', href: '/classes' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'About', href: '#about' },
+  { name: 'Calendar', href: '#calendar' },
+  { name: 'Classes', href: '#classes' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export function NavbarComponent() {
@@ -24,7 +24,7 @@ export function NavbarComponent() {
           {/* Logo */}
           <div className="text-2xl font-bold">
             <Link href="/">
-              <Image src="/images/Valenzuela_Logo_White.png" alt="Logo" width={150} height={150} className="h-16 w-auto" />
+              <Image src="/images/Valenzuela_Logo_White.png" alt="Logo" width={150} height={150} className="h-16 w-auto" priority />
             </Link>
           </div>
 
