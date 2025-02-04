@@ -20,7 +20,7 @@ const MapComponent: React.FC = () => {
     // The coordinates of the Dojo.
     const myLatitude = 41.07449909420177; 
     const myLongitude =  -73.52111546462568; 
-    const zoomLevel = 13;
+    const zoomLevel = 16;
 
     // Initialize the map with your coordinates.
     const map = L.map(mapContainerRef.current).setView([myLatitude, myLongitude], zoomLevel);
