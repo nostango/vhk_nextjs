@@ -63,27 +63,6 @@ export default function ClassList() {
                 e.description === description_en && 
                 e.eventAges === event_ages
                 );
-                const data = await res.json();
-                const items = JSON.parse(data.body);
-
-                const groupedClassesMap: Record<string, GroupedClasses> = {};
-
-                items.forEach((item: { calendarID: string; calendar_name: string; description_en: string; event_color: string; event_name: string; recurrence: string; times: string; event_ages: string }) => {
-                    const { calendarID, calendar_name, description_en, event_color, event_name, recurrence, times, event_ages } = item;
-
-                    if (!groupedClassesMap[calendarID]) {
-                        groupedClassesMap[calendarID] = {
-                            calendarName: calendar_name,
-                            eventColor: event_color || '#ffffff',
-                            events: [{
-                                eventName: event_name,
-                                times: `${recurrence} - ${times}`,
-                                description: description_en || 'No description available',
-                                eventAges: event_ages || 'No age range provided',
-                            }],
-                        };
-                    } else {
-                        const existingEvent = groupedClassesMap[calendarID].events.find(e => e.eventName === event_name && e.description === description_en && e.eventAges === event_ages);
                         if (!existingEvent) {
                             groupedClassesMap[calendarID].events.push({
                                 eventName: event_name,
@@ -93,49 +72,48 @@ export default function ClassList() {
                             });
                         }
                     }
-            }
-            });
-    
-            // Define your custom orders
-            const calendarOrder = ['Kids Kenpo', 'Jr Kenpo', 'Adults Kickboxing']
-            const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    
-            // Convert the map to an array and sort by the custom calendar order.
-            const sortedGroupedClasses = Object.values(groupedClassesMap).sort((a, b) => {
-            // Adjust if necessary (e.g., use toLowerCase() if your data might differ in case)
-            const indexA = calendarOrder.indexOf(a.calendarName.toLowerCase());
-            const indexB = calendarOrder.indexOf(b.calendarName.toLowerCase());
-            return indexA - indexB;
-            });
-    
-            // Sort events in each calendar group:
-            sortedGroupedClasses.forEach(group => {
-            group.events.sort((a, b) => {
-                // First, sort by event name alphabetically.
-                const nameComparison = a.eventName.localeCompare(b.eventName);
-                if (nameComparison !== 0) return nameComparison;
-    
-                // Next, if the event names are the same, sort by the day of the week.
-                // Here, we assume that the day is part of the recurrence info in the 'times' string.
-                // For example, if a.times is "Monday - 10:00 AM", we extract "monday".
-                const dayA = a.times.split('-')[0].trim().toLowerCase();
-                const dayB = b.times.split('-')[0].trim().toLowerCase();
-    
-                return dayOrder.indexOf(dayA) - dayOrder.indexOf(dayB);
-            });
-            });
-    
-            setClasses(sortedGroupedClasses);
-        } catch (err) {
-            console.error('Error fetching class data:', err);
-            setError('Failed to load classes');
-        } finally {
-            setLoading(false);
-        }
-        }
-    
-        fetchClasses();
-    }, []);
+                    });
+        
+                    // Define your custom orders
+                    const calendarOrder = ['Kids Kenpo', 'Jr Kenpo', 'Adults Kickboxing']
+                    const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            
+                    // Convert the map to an array and sort by the custom calendar order.
+                    const sortedGroupedClasses = Object.values(groupedClassesMap).sort((a, b) => {
+                    // Adjust if necessary (e.g., use toLowerCase() if your data might differ in case)
+                    const indexA = calendarOrder.indexOf(a.calendarName.toLowerCase());
+                    const indexB = calendarOrder.indexOf(b.calendarName.toLowerCase());
+                    return indexA - indexB;
+                    });
+            
+                    // Sort events in each calendar group:
+                    sortedGroupedClasses.forEach(group => {
+                    group.events.sort((a, b) => {
+                        // First, sort by event name alphabetically.
+                        const nameComparison = a.eventName.localeCompare(b.eventName);
+                        if (nameComparison !== 0) return nameComparison;
+            
+                        // Next, if the event names are the same, sort by the day of the week.
+                        // Here, we assume that the day is part of the recurrence info in the 'times' string.
+                        // For example, if a.times is "Monday - 10:00 AM", we extract "monday".
+                        const dayA = a.times.split('-')[0].trim().toLowerCase();
+                        const dayB = b.times.split('-')[0].trim().toLowerCase();
+            
+                        return dayOrder.indexOf(dayA) - dayOrder.indexOf(dayB);
+                    });
+                    });
+            
+                    setClasses(sortedGroupedClasses);
+                } catch (err) {
+                    console.error('Error fetching class data:', err);
+                    setError('Failed to load classes');
+                } finally {
+                    setLoading(false);
+                }
+                }
+            
+                fetchClasses();
+            }, []);
       
 
     if (loading) return <div>Loading classes...</div>;
