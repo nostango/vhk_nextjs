@@ -71,7 +71,7 @@ export function NavbarComponent() {
         {/* This section is already handled by the Desktop Menu above with `md:flex` and `mt-4` */}
 
         {/* White Line Divider */}
-        <div className="w-[80%] h-px bg-white mx-auto my-4"></div>
+        <div className="w-[80%] h-px bg-white mx-auto"></div>
 
 
         {/* Mobile Menu */}

@@ -28,8 +28,6 @@ export default function ClassList() {
             const data = await res.json();
             const items = JSON.parse(data.body);
     
-            console.log('Fetched classes:', items);
-    
             // Group the classes by calendarID
             const groupedClassesMap: Record<string, GroupedClasses> = {};
     
@@ -114,7 +112,7 @@ export default function ClassList() {
             
                 fetchClasses();
             }, []);
-      
+        
 
     if (loading) return <div>Loading classes...</div>;
     if (error) return <div className="text-red-500">{error}</div>;

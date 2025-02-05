@@ -84,7 +84,7 @@ export default function AnnouncementCarousel() {
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">Announcements</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <div className="min-h-[200px] transition-all duration-500 ease-in-out">
           <div className="space-y-2">
             <div className="flex justify-between items-center">

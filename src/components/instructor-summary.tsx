@@ -11,7 +11,7 @@ interface InstructorSummaryProps {
 
 export default function InstructorSummary({ instructors }: InstructorSummaryProps) {
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="container mx-auto px-4">
       {instructors.map((instructor, index) => (
         <div key={index} className="grid md:grid-cols-2 gap-8 items-start">
           {/* Image container - full width on mobile, half width on desktop */}
