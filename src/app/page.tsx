@@ -62,9 +62,9 @@ export default function Home() {
           <InstructorSummary instructors={instructors} />
         </div>
 
-        <div id="map">
-          <MapComponentNoSSR />
-        </div>
+      </div>
+      <div id="map">
+        <MapComponentNoSSR />
       </div>
     </div>
   );
