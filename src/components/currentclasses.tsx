@@ -9,7 +9,7 @@ calendar_name: string;
 description_en: string;
 event_color: string;
 event_name: string;
-recurrence: string;
+event_day_of_week: string;
 times: string;
 event_ages: string;
 }
@@ -34,7 +34,7 @@ useEffect(() => {
         
         // Filter to include only classes happening today.
         const filtered = items.filter((item) =>
-        item.recurrence?.toLowerCase().includes(todayName.toLowerCase())
+        item.event_day_of_week?.toLowerCase().includes(todayName.toLowerCase())
         );
 
         // Sort by the start time.
@@ -54,7 +54,6 @@ useEffect(() => {
         setLoading(false);
     }
     }
-
     fetchClasses();
 }, []);
 
