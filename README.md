@@ -1,37 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Valenzuela Hawaiian Kenpo Website
+
+This is a [Next.js](https://nextjs.org) project designed to serve as the official website for **Valenzuela Hawaiian Kenpo**, a martial arts school. The site provides information about classes, instructors, announcements, and an embedded calendar for scheduling.
+
+## Features
+
+- **Dynamic Class Listings**: Displays available karate classes, fetching schedule data from an AWS Lambda function.
+- **Instructor Profiles**: Showcases information about the instructors, including biographies and images.
+- **Announcements Carousel**: Displays the latest announcements with an auto-scrolling feature.
+- **Google Calendar Integration**: Embeds a Google Calendar for event visibility.
+- **Responsive Navigation Bar**: Provides quick access to different sections of the site.
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
 ```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+Then, run the development server:
+```
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
+Open http://localhost:3000 in your browser to view the website.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## File Structure
+ - <mark>pages/index.tsx</mark>: Main landing page, displaying the navigation bar, announcements, instructor summary, and class schedule.
+ - components/navbar.tsx: Navigation bar with links to different sections.
+ - components/announcement-carousel.tsx: Fetches and displays announcements dynamically in a rotating carousel.
+ - components/classeslist.tsx: Fetches and displays available classes.
+ - components/instructor-summary.tsx: Lists instructors with their bios and images.
+ - utils/calendar-retrieval.js: Manages Google Calendar integration and event processing.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Integration
+This project fetches data from AWS Lambda functions:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ - **Class Schedules**: https://moik8i7sua.execute-api.us-east-1.amazonaws.com/default/pullSchedule
+ - **Announcements**: Retrieved from Google Calendar and filtered for display.
+ - **Calendar Processing**: Extracts events and processes descriptions in multiple languages.
 
-## Learn More
+## Deployment
+This project is deployed on AWS Amplify
 
-To learn more about Next.js, take a look at the following resources:
+For more information on deployment, refer to the Next.js deployment documentation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# vhk_nextjs
+This project aims to enhance the digital presence of Valenzuela Hawaiian Kenpo while providing a seamless experience for students and visitors.

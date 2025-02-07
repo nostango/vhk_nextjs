@@ -33,17 +33,14 @@ useEffect(() => {
         const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
         
         // Filter to include only classes happening today.
-        // Adjust the comparison if your recurrence field has a more complex format.
         const filtered = items.filter((item) =>
         item.recurrence?.toLowerCase().includes(todayName.toLowerCase())
         );
 
         // Sort by the start time.
-        // We assume the times string is formatted as "start - end" (e.g. "09:00 AM - 10:00 AM")
         filtered.sort((a, b) => {
         const parseStartTime = (timeStr: string) => {
             const [start] = timeStr.split(' - ');
-            // Use an arbitrary date (e.g. Jan 1, 1970) to parse the time.
             return new Date(`1970/01/01 ${start}`).getTime();
         };
         return parseStartTime(a.times) - parseStartTime(b.times);
@@ -61,8 +58,8 @@ useEffect(() => {
     fetchClasses();
 }, []);
 
-if (loading) return <div>Loading classes...</div>;
 if (error) return <div className="text-red-500">{error}</div>;
+if (loading) return <div>Loading...</div>;
 
 // Format today's date like "Monday Feb 3"
 const todayFormatted = new Date().toLocaleDateString('en-US', {
@@ -72,28 +69,30 @@ const todayFormatted = new Date().toLocaleDateString('en-US', {
 });
 
 return (
-    <Card className="w-full max-w-2xl p-4 bg-dark-100 text-white">
-    <CardHeader>
-        <CardTitle>{todayFormatted}</CardTitle>
-    </CardHeader>
-    <CardContent>
-        <p className="mb-4">Classes Today:</p>
+    <div className="flex items-center justify-center">
+    <Card className="flex flex-col w-full max-w-2xl bg-dark-100 text-white relative">
+        <CardHeader>
+        <CardTitle className="items-center text-2xl font-bold">{todayFormatted}</CardTitle>
+        </CardHeader>
+        <CardContent>
+        <p>Classes Today:</p>
         {todayClasses.length === 0 ? (
-        <p>No classes today.</p>
+            <p>No classes today.</p>
         ) : (
-        todayClasses.map((item, idx) => (
+            todayClasses.map((item, idx) => (
             <div key={idx} className="mb-4">
-            <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                 <span className="font-bold">{item.event_name}</span>
                 {/* Display a color dot using the calendar's color */}
                 <div className="w-4 h-4 rounded-full" style={{ backgroundColor: item.event_color }} />
+                </div>
+                <p>{item.times}</p>
+                {idx !== todayClasses.length - 1 && <hr className="my-2 border-gray-500" />}
             </div>
-            <p>{item.times}</p>
-            {idx !== todayClasses.length - 1 && <hr className="my-2 border-gray-500" />}
-            </div>
-        ))
+            ))
         )}
-    </CardContent>
+        </CardContent>
     </Card>
+    </div>
 );
 }
