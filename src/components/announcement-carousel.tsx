@@ -92,7 +92,7 @@ export default function AnnouncementCarousel() {
                 {announcements[currentIndex].title}
               </h3>
               <span className="text-sm text-gray-400">
-                {format(announcements[currentIndex].date, 'MMM dd, yyyy')}
+                {format(announcements[currentIndex].start_date, 'MMM dd, yyyy')}
               </span>
             </div>
             <p className="text-gray-400">

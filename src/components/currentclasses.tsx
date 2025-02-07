@@ -15,47 +15,47 @@ event_ages: string;
 }
 
 export default function TodayClasses() {
-const [todayClasses, setTodayClasses] = useState<ClassItem[]>([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState<string | null>(null);
+const [todayClasses, setTodayClasses] = useState<ClassItem[]>([])
+const [loading, setLoading] = useState(true)
+const [error, setError] = useState<string | null>(null)
 
 useEffect(() => {
     async function fetchClasses() {
     try {
         const res = await fetch(
         'https://moik8i7sua.execute-api.us-east-1.amazonaws.com/default/pullSchedule'
-        );
-        const data = await res.json();
+        )
+        const data = await res.json()
         // Assuming the API returns an object with a JSON string in data.body
-        const items: ClassItem[] = JSON.parse(data.body);
+        const items: ClassItem[] = JSON.parse(data.body)
 
         // Get today's day name (e.g. "Monday")
-        const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' })
         
         // Filter to include only classes happening today.
         const filtered = items.filter((item) =>
         item.event_day_of_week?.toLowerCase().includes(todayName.toLowerCase())
-        );
+        )
 
         // Sort by the start time.
         filtered.sort((a, b) => {
         const parseStartTime = (timeStr: string) => {
             const [start] = timeStr.split(' - ');
-            return new Date(`1970/01/01 ${start}`).getTime();
-        };
-        return parseStartTime(a.times) - parseStartTime(b.times);
-        });
+            return new Date(`1970/01/01 ${start}`).getTime()
+        }
+        return parseStartTime(a.times) - parseStartTime(b.times)
+        })
 
-        setTodayClasses(filtered);
+        setTodayClasses(filtered)
     } catch (err) {
-        console.error('Error fetching class data:', err);
-        setError('Failed to load classes');
+        console.error('Error fetching class data:', err)
+        setError('Failed to load classes')
     } finally {
-        setLoading(false);
+        setLoading(false)
     }
     }
-    fetchClasses();
-}, []);
+    fetchClasses()
+}, [])
 
 if (error) return <div className="text-red-500">{error}</div>;
 if (loading) return <div>Loading...</div>;
@@ -65,7 +65,7 @@ const todayFormatted = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'short',
     day: 'numeric',
-});
+})
 
 return (
     <div className="flex items-center justify-center">
@@ -93,5 +93,5 @@ return (
         </CardContent>
     </Card>
     </div>
-);
+)
 }
