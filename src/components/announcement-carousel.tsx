@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 interface AnnouncementItem {
   id: string
   title: string
-  date: Date
+  start_date: Date
   content: string
 }
 
