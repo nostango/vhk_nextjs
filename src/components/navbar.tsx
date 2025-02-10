@@ -4,17 +4,19 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Menu } from 'lucide-react'
-import Image from 'next/image';
+import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 
 const navItems = [
-  { name: 'About', href: '#about' },
-  { name: 'Calendar', href: '#calendar' },
-  { name: 'Classes', href: '#classes' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'nav.about', href: '#about' },
+  { name: 'nav.calendar', href: '#calendar' },
+  { name: 'nav.classes', href: '#classes' },
+  { name: 'nav.contact', href: '#contact' },
 ]
 
 export function NavbarComponent() {
   const [isOpen, setIsOpen] = useState(false)
+  const t = useTranslation('nav')
 
   return (
     <nav className="bg-black text-white">
@@ -37,7 +39,7 @@ export function NavbarComponent() {
                 whileHover="hover"
               >
                 <Link href={item.href} className="py-2 px-4">
-                  {item.name}
+                  {t.t(item.name)}
                 </Link>
                 <motion.div
                   className="absolute inset-0 bg-white"
