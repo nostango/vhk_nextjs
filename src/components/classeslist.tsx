@@ -37,11 +37,11 @@ export default function ClassList() {
             description_en: string; 
             event_color: string; 
             event_name: string; 
-            recurrence: string; 
+            event_recurr: string; 
             times: string; 
             event_ages: string 
             }) => {
-            const { calendarID, calendar_name, description_en, event_color, event_name, recurrence, times, event_ages } = item;
+            const { calendarID, calendar_name, description_en, event_color, event_name, event_recurr, times, event_ages } = item;
     
             if (!groupedClassesMap[calendarID]) {
                 groupedClassesMap[calendarID] = {
@@ -50,7 +50,7 @@ export default function ClassList() {
                 events: [{
                     eventName: event_name,
                     // Build the times string (assuming recurrence contains day info)
-                    times: `${recurrence} - ${times}`,
+                    times: `${event_recurr} - ${times}`,
                     description: description_en || 'No description available',
                     eventAges: event_ages || 'No age range provided',
                 }],
@@ -64,7 +64,7 @@ export default function ClassList() {
                         if (!existingEvent) {
                             groupedClassesMap[calendarID].events.push({
                                 eventName: event_name,
-                                times: `${recurrence} - ${times}`,
+                                times: `${event_recurr} - ${times}`,
                                 description: description_en || 'No description available',
                                 eventAges: event_ages || 'No age range provided',
                             });
@@ -74,7 +74,7 @@ export default function ClassList() {
         
                     // Define your custom orders
                     const calendarOrder = ['Kids Kenpo', 'Jr Kenpo', 'Adults Kickboxing']
-                    const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                    const dayOrder = ['Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday', 'Every Sunday'];
             
                     // Convert the map to an array and sort by the custom calendar order.
                     const sortedGroupedClasses = Object.values(groupedClassesMap).sort((a, b) => {
