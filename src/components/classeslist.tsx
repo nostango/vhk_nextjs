@@ -42,6 +42,9 @@ export default function ClassList() {
             times: string; 
             event_ages: string 
             }) => {
+                if (item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com') {
+                    return;
+                }
             const { calendarID, calendar_name, description_en, description_es, event_color, event_name, event_recurr, times, event_ages } = item;
     
             if (!groupedClassesMap[calendarID]) {

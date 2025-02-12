@@ -33,6 +33,7 @@ export default function AnnouncementCarousel() {
         }
 
         const filtered = items.filter((item: ScheduleItem) => item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+        
 
         const announcementsData = filtered.map((item: ScheduleItem) => ({
           id: item.eventID,           // or some unique ID from DynamoDB

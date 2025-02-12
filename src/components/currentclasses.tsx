@@ -29,13 +29,18 @@ useEffect(() => {
         // Assuming the API returns an object with a JSON string in data.body
         const items: ClassItem[] = JSON.parse(data.body)
 
+        // Filter out the specific calendar
+        const filteredByCalendar = items.filter(item => 
+            item.calendarID !== '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com'
+        )
+
         // Get today's day name (e.g. "Monday")
         const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' })
         
         // Filter to include only classes happening today.
-        const filtered = items.filter((item) =>
-        item.event_day_of_week?.toLowerCase().includes(todayName.toLowerCase())
-        )
+        const filtered = filteredByCalendar.filter((item) =>
+            item.event_day_of_week?.toLowerCase().includes(todayName.toLowerCase())
+            )
 
         // Sort by the start time.
         filtered.sort((a, b) => {
