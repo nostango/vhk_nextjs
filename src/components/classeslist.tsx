@@ -11,7 +11,7 @@ import {
 interface GroupedClasses {
     calendarName: string;
     eventColor: string;
-    events: { eventName: string; times: string; description: string; eventAges: string }[];
+    events: { eventName: string; times: string; description_en: string; description_es: string; eventAges: string }[];
 }
 
 export default function ClassList() {
@@ -34,14 +34,15 @@ export default function ClassList() {
             items.forEach((item: { 
             calendarID: string; 
             calendar_name: string; 
-            description_en: string; 
+            description_en: string;
+            description_es: string; 
             event_color: string; 
             event_name: string; 
             event_recurr: string; 
             times: string; 
             event_ages: string 
             }) => {
-            const { calendarID, calendar_name, description_en, event_color, event_name, event_recurr, times, event_ages } = item;
+            const { calendarID, calendar_name, description_en, description_es, event_color, event_name, event_recurr, times, event_ages } = item;
     
             if (!groupedClassesMap[calendarID]) {
                 groupedClassesMap[calendarID] = {
@@ -51,21 +52,24 @@ export default function ClassList() {
                     eventName: event_name,
                     // Build the times string (assuming recurrence contains day info)
                     times: `${event_recurr} - ${times}`,
-                    description: description_en || 'No description available',
+                    description_en: description_en || 'No description available',
+                    description_es: description_es || 'No description available',
                     eventAges: event_ages || 'No age range provided',
                 }],
                 };
             } else {
                 const existingEvent = groupedClassesMap[calendarID].events.find(e => 
                 e.eventName === event_name && 
-                e.description === description_en && 
+                e.description_en === description_en && 
+                e.description_es === description_es &&
                 e.eventAges === event_ages
                 );
                         if (!existingEvent) {
                             groupedClassesMap[calendarID].events.push({
                                 eventName: event_name,
                                 times: `${event_recurr} - ${times}`,
-                                description: description_en || 'No description available',
+                                description_en: description_en || 'No description available',
+                                description_es: description_es || 'No description available',
                                 eventAges: event_ages || 'No age range provided',
                             });
                         }
@@ -136,7 +140,8 @@ export default function ClassList() {
                             <div key={idx} className="mb-4">
                                 <p className="font-bold">{event.eventName}</p>
                                 <p>{event.times}</p>
-                                <p>{event.description}</p>
+                                <p>{event.description_en}</p>
+                                <p>{event.description_es}</p>
                                 {idx !== klass.events.length - 1 && <hr className="my-2" />}
                             </div>
                         ))}
