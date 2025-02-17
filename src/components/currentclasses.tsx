@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
 
 interface ClassItem {
 calendarID: string;
@@ -15,6 +16,7 @@ event_ages: string;
 }
 
 export default function TodayClasses() {
+const { t, i18n } = useTranslation('common');
 const [todayClasses, setTodayClasses] = useState<ClassItem[]>([])
 const [loading, setLoading] = useState(true)
 const [error, setError] = useState<string | null>(null)
@@ -65,12 +67,15 @@ useEffect(() => {
 if (error) return <div className="text-red-500">{error}</div>;
 if (loading) return <div>Loading...</div>;
 
-// Format today's date like "Monday Feb 3"
-const todayFormatted = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric',
-})
+// Format today's date with the correct locale
+const todayFormatted = new Date().toLocaleDateString(
+    i18n.language === 'en' ? 'en-US' : 'es-ES',
+    {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+    }
+);
 
 return (
     <div className="flex items-center justify-center">
@@ -79,7 +84,7 @@ return (
         <CardTitle className="items-center text-2xl font-bold">{todayFormatted}</CardTitle>
         </CardHeader>
         <CardContent>
-        <p>Classes Today:</p>
+        <p>{t('today.classesTitle', 'Classes Today')}:</p>
         {todayClasses.length === 0 ? (
             <p>No classes today.</p>
         ) : (

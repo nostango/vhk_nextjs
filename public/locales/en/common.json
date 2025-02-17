@@ -1,0 +1,23 @@
+{
+    "nav": {
+        "about": "About",
+        "calendar": "Calendar",
+        "classes": "Classes",
+        "contact": "Contact"
+    },
+    "language": "Language",
+    "announcements": {
+        "title": "Announcements",
+        "empty": "No announcements available"
+    },
+    "classes": {
+        "noClasses": "No classes available",
+        "loading": "Loading classes...",
+        "error": "Failed to load classes",
+        "ageRange": "Age Range",
+        "noAgeRange": "No age range provided"
+    },
+    "today": {
+        "classesTitle": "Classes Today"
+    }
+}
