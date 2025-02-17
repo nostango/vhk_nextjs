@@ -1,6 +1,11 @@
-import type { Metadata } from "next";
+'use client'
+
 import localFont from "next/font/local";
+import { useTranslation } from 'react-i18next';
 import "./globals.css";
+import i18n from './i18n';
+import { I18nextProvider } from 'react-i18next';
+import { useEffect, useState } from 'react';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -13,26 +18,35 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Valenzuela's Hawaiian Kenpo",
-  description: "Created by nostango",
-  icons:{
-    icon: "favicon.ico"
-  }
-};
-
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent hydration mismatch by not rendering until client-side
+  if (!mounted) {
+    return (
+      <html>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          {children}
+        </body>
+      </html>
+    );
+  }
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <I18nextProvider i18n={i18n}>
+      <html lang={i18n.language}>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          {children}
+        </body>
+      </html>
+    </I18nextProvider>
   );
 }
