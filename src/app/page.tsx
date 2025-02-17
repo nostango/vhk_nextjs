@@ -1,6 +1,7 @@
 "use client"
 // pages/index.tsx
 
+import { Suspense } from 'react';
 import { NavbarComponent } from '../components/navbar';
 import AnnouncementCarousel from '@/components/announcement-carousel';
 import InstructorSummary from '@/components/instructor-summary';
@@ -47,37 +48,38 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <NavbarComponent />
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col space-y-6 mt-12">
+          <Suspense fallback={<div>Loading announcements...</div>}>
+            <AnnouncementCarousel />
+          </Suspense>
+          <Suspense fallback={<div>Loading today's classes...</div>}>
+            <TodayClasses />
+          </Suspense>
 
-      <div className="flex flex-col items-center mt-8 md:mt-12 mb-8 md:mb-12 space-y-8 md:space-y-12 px-4 md:px-0">
-        <AnnouncementCarousel />
-        <div id='today_classes' className="w-full max-w-full md:max-w-4xl">
-          <TodayClasses />
+          <div id='calendar' className="flex justify-center items-center">
+            <iframe 
+              src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&showTz=0&showCalendars=0&showTabs=0&showNav=0&showTitle=0&src=NmY5OWI2NTlkNWQ1YTVkNWE2MTg2YzFkYWFhYTVmYTg5ZTY0MTI4NWU4MWMyNThkNzZlMjMwODcyN2RkYmQxY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NzhjNWJiM2RjOWYyY2Q4NjVmZTBiMWU3NTFkNDQxODMzZTdlZWNiZjhmOWUxMDBlMGRhMjFhZmVmZDY4YWVjZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NDA2M2VmMTZkYjBiMjhjMWQ1N2JlNGMzNWQ0M2JhNzkwNTNjNGY1ODEzNTBmMDU2YTRkZTVjZjRjMGM5YzJmOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Zjg1YjcwYzdkMjBkOTI2ZTQ4YWExMjZmN2JiYzI4NDUyZjhmOTU5MDA1MzJlYTQ2YWUzN2FhYTVlYzg4ZmExZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFlNzljMDI0YWQ5ZDliNDk1NTdiZDVkYWUyZTQyZTE5ZDFmNzQ1NWNhOTkxMDczMmQzMjYzODQ4MDg2ZWQ3MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NjZjNzAxZWUxYTRlYzMzNjhlODI0YmUzZjhhNDdlNjBiYjIzZTM5ZGVjMDFkNjU3YWMyZGNjNTZmYWI1ZmYxMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%230B8043&color=%23616161&color=%239E69AF&color=%23AD1457&color=%234285F4&color=%23D50000&color=%230B8043" 
+              style={{ border: 'solid 0px'}}
+              width="800"
+              height="600"
+              frameBorder="1"
+              scrolling="no"
+              />
+          </div>
+
+          <Suspense fallback={<div>Loading classes...</div>}>
+            <ClassList />
+          </Suspense>
+
+          <Suspense fallback={<div>Loading instructor info...</div>}>
+            <InstructorSummary instructors={instructors} />
+          </Suspense>
         </div>
-
-        <div id='calendar' className="flex justify-center items-center w-full overflow-x-auto">
-          <iframe 
-            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&showTz=0&showCalendars=0&showTabs=0&showNav=0&showTitle=0&src=NmY5OWI2NTlkNWQ1YTVkNWE2MTg2YzFkYWFhYTVmYTg5ZTY0MTI4NWU4MWMyNThkNzZlMjMwODcyN2RkYmQxY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NzhjNWJiM2RjOWYyY2Q4NjVmZTBiMWU3NTFkNDQxODMzZTdlZWNiZjhmOWUxMDBlMGRhMjFhZmVmZDY4YWVjZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NDA2M2VmMTZkYjBiMjhjMWQ1N2JlNGMzNWQ0M2JhNzkwNTNjNGY1ODEzNTBmMDU2YTRkZTVjZjRjMGM5YzJmOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Zjg1YjcwYzdkMjBkOTI2ZTQ4YWExMjZmN2JiYzI4NDUyZjhmOTU5MDA1MzJlYTQ2YWUzN2FhYTVlYzg4ZmExZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFlNzljMDI0YWQ5ZDliNDk1NTdiZDVkYWUyZTQyZTE5ZDFmNzQ1NWNhOTkxMDczMmQzMjYzODQ4MDg2ZWQ3MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NjZjNzAxZWUxYTRlYzMzNjhlODI0YmUzZjhhNDdlNjBiYjIzZTM5ZGVjMDFkNjU3YWMyZGNjNTZmYWI1ZmYxMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%230B8043&color=%23616161&color=%239E69AF&color=%23AD1457&color=%234285F4&color=%23D50000&color=%230B8043" 
-            style={{ border: 'solid 0px'}}
-            width="700"
-            height="400"
-            className="max-w-[800px] md:h-[600px]"
-            frameBorder="0"
-            scrolling="no"
-          />
-        </div>
-
-        <div id="classes" className="w-full max-w-full md:max-w-4xl px-4 md:px-0">
-          <ClassList />
-        </div>
-
-        <div id="instructors" className="w-full max-w-full md:max-w-4xl px-4 md:px-0">
-          <InstructorSummary instructors={instructors} />
-        </div>
-
       </div>
-      <div id="map" className="w-full">
+      <Suspense fallback={<div>Loading map...</div>}>
         <MapComponentNoSSR />
-      </div>
+      </Suspense>
     </div>
   );
 }
