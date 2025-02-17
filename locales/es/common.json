@@ -1,0 +1,17 @@
+{
+    "nav": {
+        "about": "Acerca de",
+        "calendar": "Calendario",
+        "classes": "Clases",
+        "contact": "Contacto"
+    },
+    "sections": {
+        "announcements": "Anuncios",
+        "todayClasses": "Clases de Hoy",
+        "noClasses": "No hay clases hoy",
+        "instructors": "Instructores"
+    },
+        "loading": "Cargando...",
+        "error": "Ocurrió un error",
+        "noData": "No hay datos disponibles"
+}
