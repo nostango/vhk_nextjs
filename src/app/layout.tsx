@@ -1,7 +1,6 @@
 'use client'
 
 import localFont from "next/font/local";
-import { useTranslation } from 'react-i18next';
 import "./globals.css";
 import i18n from './i18n';
 import { I18nextProvider } from 'react-i18next';
