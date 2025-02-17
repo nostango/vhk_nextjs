@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.716.0",
+    "accept-language": "^3.0.20",
     "aws-amplify": "^6.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.17",
+    "i18next": "^24.2.2",
+    "i18next-http-backend": "^3.0.2",
     "latest": "^0.2.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.460.0",
@@ -23,6 +26,7 @@
     "next-i18next": "^15.4.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-i18next": "^15.4.0",
     "swr": "^2.3.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"

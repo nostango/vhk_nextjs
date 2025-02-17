@@ -1,15 +1,21 @@
 import { StaticImageData } from "next/image"
 import Image from "next/image"
+import { useTranslation } from "react-i18next"
 
 interface InstructorSummaryProps {
   instructors: {
     name: string
-    biography: string
+    biography: {
+      en: string
+      es: string
+    }
     imageUrl: string | StaticImageData
   }[]
 }
 
 export default function InstructorSummary({ instructors }: InstructorSummaryProps) {
+  const { i18n } = useTranslation();
+  
   return (
     <section className="container mx-auto px-4">
       {instructors.map((instructor, index) => (
@@ -29,7 +35,9 @@ export default function InstructorSummary({ instructors }: InstructorSummaryProp
           <div className="space-y-4">
             <h2 className="text-3xl font-bold tracking-tight">{instructor.name}</h2>
             <div className="prose prose-slate max-w-none">
-              <p className="text-muted-foreground leading-relaxed">{instructor.biography}</p>
+              <p className="text-gray-400">
+                {instructor.biography[i18n.language as keyof typeof instructor.biography]}
+              </p>
             </div>
           </div>
         </div>
