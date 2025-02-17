@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
-import { useTranslation } from 'react-i18next'
 
 interface AnnouncementItem {
   id: string
@@ -14,20 +13,8 @@ interface AnnouncementItem {
 }
 
 export default function AnnouncementCarousel() {
-  const { t, i18n } = useTranslation('common')
   const [announcements, setAnnouncements] = useState<AnnouncementItem[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
-
-  // Helper function to extract correct language content
-  const getLocalizedContent = (content: string) => {
-    const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/)
-    const esMatch = content.match(/\[ES\](.*?)(?=$)/)
-    
-    const enContent = enMatch ? enMatch[1].trim() : ''
-    const esContent = esMatch ? esMatch[1].trim() : ''
-    
-    return i18n.language === 'en' ? enContent : esContent
-  }
 
   // 1) Fetch from your "GetSchedule" Lambda endpoint on mount
   useEffect(() => {
@@ -84,14 +71,10 @@ export default function AnnouncementCarousel() {
     return (
       <Card className="w-full max-w-2xl mx-auto bg-black text-white">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            {t('announcements.title', 'Announcements')}
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Announcements</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-center text-gray-400">
-            {t('announcements.empty', 'No announcements available')}
-          </p>
+          <p className="text-center text-gray-400">No announcements available</p>
         </CardContent>
       </Card>
     )
@@ -100,9 +83,7 @@ export default function AnnouncementCarousel() {
   return (
     <Card className="w-full max-w-2xl mx-auto bg-black text-white">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          {t('announcements.title', 'Announcements')}
-        </CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">Announcements</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="min-h-[200px] transition-all duration-500 ease-in-out">
@@ -116,7 +97,7 @@ export default function AnnouncementCarousel() {
               </span>
             </div>
             <p className="text-gray-400">
-              {getLocalizedContent(announcements[currentIndex].content)}
+              {announcements[currentIndex].content}
             </p>
           </div>
         </div>
