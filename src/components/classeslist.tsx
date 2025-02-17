@@ -21,17 +21,6 @@ export default function ClassList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Helper function to extract correct language content
-    const getLocalizedContent = (content: string) => {
-        const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/);
-        const esMatch = content.match(/\[ES\](.*?)(?=$)/);
-        
-        const enContent = enMatch ? enMatch[1].trim() : '';
-        const esContent = esMatch ? esMatch[1].trim() : '';
-        
-        return i18n.language === 'en' ? enContent : esContent;
-    };
-
     // Helper function to extract age content
     const getAgeContent = (content: string) => {
         return content || t('classes.noAgeRange');
