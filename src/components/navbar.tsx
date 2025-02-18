@@ -11,10 +11,10 @@ const navItems = [
   { name: 'nav.about', href: '#about' },
   { name: 'nav.calendar', href: '#calendar' },
   { name: 'nav.classes', href: '#classes' },
-  { name: 'nav.contact', href: '#contact' },
+  { name: 'nav.contact', href: '#contact' }
 ]
 
-export function NavbarComponent() {
+export const NavbarComponent = () => {
   const { t, i18n } = useTranslation('common')
   const [isOpen, setIsOpen] = useState(false)
 
@@ -24,8 +24,8 @@ export function NavbarComponent() {
   }
 
   return (
-    <nav className="bg-black text-white">
-      <div className="container mx-auto px-4">
+    <nav className='bg-black text-white'>
+      <div className='container mx-auto px-4'>
         <div className="flex flex-row justify-between items-center py-4 md:flex-col md:items-center">
           {/* Logo */}
           <div className="text-2xl font-bold">

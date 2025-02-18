@@ -6,9 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const nextConfig: NextConfig = {
-    eslint: {
-        ignoreDuringBuilds: true, // This will ignore ESLint errors during build
-    },
+    staticPageGenerationTimeout: 600 // Increase timeout to 3 minutes
 };
 
 export default nextConfig;

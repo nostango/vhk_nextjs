@@ -53,7 +53,7 @@ export default function Home() {
           <Suspense fallback={<div>Loading announcements...</div>}>
             <AnnouncementCarousel />
           </Suspense>
-          <Suspense fallback={<div>Loading today's classes...</div>}>
+          <Suspense fallback={<div>Loading classes for today...</div>}>
             <TodayClasses />
           </Suspense>
 
