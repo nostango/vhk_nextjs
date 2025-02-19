@@ -7,6 +7,7 @@ import {
     CardTitle,
     CardContent,
 } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
 
 interface GroupedClasses {
     calendarName: string;
@@ -15,9 +16,15 @@ interface GroupedClasses {
 }
 
 export default function ClassList() {
+    const { t, i18n } = useTranslation('common');
     const [classes, setClasses] = useState<GroupedClasses[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // Helper function to extract age content
+    const getAgeContent = (content: string) => {
+        return content || t('classes.noAgeRange');
+    };
 
     useEffect(() => {
         async function fetchClasses() {
@@ -121,9 +128,9 @@ export default function ClassList() {
             }, []);
         
 
-    if (loading) return <div>Loading classes...</div>;
-    if (error) return <div className="text-red-500">{error}</div>;
-    if (classes.length === 0) return <div>No classes available</div>;
+    if (loading) return <div>{t('classes.loading')}</div>;
+    if (error) return <div className="text-red-500">{t('classes.error')}</div>;
+    if (classes.length === 0) return <div>{t('classes.noClasses')}</div>;
 
     return (
         <div className="flex flex-col items-center w-full">
@@ -141,10 +148,25 @@ export default function ClassList() {
                     <CardContent>
                         {klass.events.map((event, idx) => (
                             <div key={idx} className="mb-4">
-                                <p className="font-bold">{event.eventName}</p>
-                                <p>{event.times}</p>
-                                <p>{event.description_en}</p>
-                                <p>{event.description_es}</p>
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold mb-1">{event.eventName}</h3>
+                                    <p className="text-sm text-gray-400 mb-1">{getAgeContent(event.eventAges)}</p>
+                                    <p className="text-sm mb-2">{event.times}</p>
+                                </div>
+                                <p className="mt-2">
+                                    {i18n.language === 'en' ? 
+                                        event.description_en
+                                            .replace(/\[AGES\].*?\[\/AGES\]/g, '')
+                                            .replace(/\[EN\]/g, '')
+                                            .replace(/\[ES\].*$/g, '')
+                                            .trim() : 
+                                        event.description_es
+                                            .replace(/\[AGES\].*?\[\/AGES\]/g, '')
+                                            .replace(/\[ES\]/g, '')
+                                            .replace(/\[EN\].*\[ES\]/g, '')
+                                            .trim()
+                                    }
+                                </p>
                                 {idx !== klass.events.length - 1 && <hr className="my-2" />}
                             </div>
                         ))}
