@@ -11,6 +11,7 @@ import cInstructorImage from '/public/images/c_instructor.jpg';
 import yInstructorImage from '/public/images/y_instructor.jpg';
 import aInstructorImage from '/public/images/a_instructor.jpg';
 import dynamic from 'next/dynamic';
+import ContactForm from '@/components/contact-form';
 
 const MapComponentNoSSR = dynamic(() => import('../components/map'), {
   ssr: false,
@@ -49,7 +50,7 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white">
       <NavbarComponent />
       <div className="container mx-auto px-4">
-        <div className="flex flex-col space-y-6 mt-12">
+        <div className="flex flex-col space-y-6 my-12">
           <Suspense fallback={<div>Loading announcements...</div>}>
             <AnnouncementCarousel />
           </Suspense>
@@ -74,6 +75,10 @@ export default function Home() {
 
           <Suspense fallback={<div>Loading instructor info...</div>}>
             <InstructorSummary instructors={instructors} />
+          </Suspense>
+
+          <Suspense fallback={<div>Loading contact form...</div>}>
+            <ContactForm />
           </Suspense>
         </div>
       </div>
