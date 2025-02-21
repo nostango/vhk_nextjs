@@ -8,9 +8,9 @@ import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
 const navItems = [
-  { name: 'nav.about', href: '#about' },
   { name: 'nav.calendar', href: '#calendar' },
   { name: 'nav.classes', href: '#classes' },
+  { name: 'nav.instructor', href: '#instructor' },
   { name: 'nav.contact', href: '#contact' }
 ]
 

@@ -69,22 +69,31 @@ export default function Home() {
               />
           </div>
 
-          <Suspense fallback={<div>Loading classes...</div>}>
-            <ClassList />
-          </Suspense>
+          <div id='classes'>
+            <Suspense fallback={<div>Loading classes...</div>}>
+              <ClassList />
+            </Suspense>
+          </div>
 
-          <Suspense fallback={<div>Loading instructor info...</div>}>
-            <InstructorSummary instructors={instructors} />
-          </Suspense>
+          <div id='instructor'>
+            <Suspense fallback={<div>Loading instructor info...</div>}>
+              <InstructorSummary instructors={instructors} />
+            </Suspense>
+          </div>
 
-          <Suspense fallback={<div>Loading contact form...</div>}>
-            <ContactForm />
-          </Suspense>
+          <div id='contact'>
+            <Suspense fallback={<div>Loading contact form...</div>}>
+              <ContactForm />
+            </Suspense>
+          </div>
         </div>
       </div>
-      <Suspense fallback={<div>Loading map...</div>}>
-        <MapComponentNoSSR />
-      </Suspense>
+
+      <div id='map'>
+        <Suspense fallback={<div>Loading map...</div>}>
+          <MapComponentNoSSR />
+        </Suspense>
+      </div>
     </div>
   );
 }
