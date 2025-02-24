@@ -3,6 +3,7 @@
         "about": "Sobre Nosotros",
         "calendar": "Calendario",
         "classes": "Clases",
+        "instructor": "Instructores",
         "contact": "Contacto"
     },
     "language": "Idioma",
@@ -19,5 +20,17 @@
     },
     "today": {
         "classesTitle": "Clases de Hoy"
+    },
+    "contact": {
+        "title": "Contáctenos",
+        "name": "Nombre",
+        "email": "Correo Electrónico",
+        "message": "Mensaje",
+        "submit": "Enviar Mensaje",
+        "success": "Mensaje enviado correctamente",
+        "error": "Error al enviar el mensaje"
+    },
+    "map": {
+        "getDirections": "Direcciones"
     }
 }

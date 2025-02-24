@@ -2,8 +2,10 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useTranslation } from 'react-i18next';
 
 const MapComponent: React.FC = () => {
+  const { t } = useTranslation('common');
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,7 +35,9 @@ const MapComponent: React.FC = () => {
 
     // Add a marker at the center.
     const marker = L.marker([myLatitude, myLongitude]).addTo(map);
-    marker.bindPopup('<b>VHK Dojo</b><br>48 Union Street, Stamford, CT 06906<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/HmeRzewUCBQm7QWH8">Get Directions</a>').openPopup();
+    marker.bindPopup(
+      `<b>VHK Dojo</b><br>48 Union Street, Stamford, CT 06906<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/HmeRzewUCBQm7QWH8">${t('map.getDirections')}</a>`
+  ).openPopup();
 
     // Cleanup the map when the component unmounts.
     return () => {

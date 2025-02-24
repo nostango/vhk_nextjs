@@ -3,6 +3,7 @@
         "about": "About",
         "calendar": "Calendar",
         "classes": "Classes",
+        "instructor": "Instructor",
         "contact": "Contact"
     },
     "language": "Language",
@@ -19,5 +20,17 @@
     },
     "today": {
         "classesTitle": "Classes Today"
+    },
+    "contact": {
+        "title": "Contact Us",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "submit": "Send Message",
+        "success": "Message sent successfully",
+        "error": "Failed to send message"
+    },
+    "map": {
+        "getDirections": "Get Directions"
     }
 }
