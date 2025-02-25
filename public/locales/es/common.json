@@ -1,0 +1,36 @@
+{
+    "nav": {
+        "about": "Sobre Nosotros",
+        "calendar": "Calendario",
+        "classes": "Clases",
+        "instructor": "Instructores",
+        "contact": "Contacto"
+    },
+    "language": "Idioma",
+    "announcements": {
+        "title": "Anuncios",
+        "empty": "No hay anuncios disponibles"
+    },
+    "classes": {
+        "noClasses": "No hay clases disponibles",
+        "loading": "Cargando clases...",
+        "error": "Error al cargar las clases",
+        "ageRange": "Rango de Edad",
+        "noAgeRange": "No se proporcionó rango de edad"
+    },
+    "today": {
+        "classesTitle": "Clases de Hoy"
+    },
+    "contact": {
+        "title": "Contáctenos",
+        "name": "Nombre",
+        "email": "Correo Electrónico",
+        "message": "Mensaje",
+        "submit": "Enviar Mensaje",
+        "success": "Mensaje enviado correctamente",
+        "error": "Error al enviar el mensaje"
+    },
+    "map": {
+        "getDirections": "Direcciones"
+    }
+}

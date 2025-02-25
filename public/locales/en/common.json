@@ -1,0 +1,36 @@
+{
+    "nav": {
+        "about": "About",
+        "calendar": "Calendar",
+        "classes": "Classes",
+        "instructor": "Instructor",
+        "contact": "Contact"
+    },
+    "language": "Language",
+    "announcements": {
+        "title": "Announcements",
+        "empty": "No announcements available"
+    },
+    "classes": {
+        "noClasses": "No classes available",
+        "loading": "Loading classes...",
+        "error": "Failed to load classes",
+        "ageRange": "Age Range",
+        "noAgeRange": "No age range provided"
+    },
+    "today": {
+        "classesTitle": "Classes Today"
+    },
+    "contact": {
+        "title": "Contact Us",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "submit": "Send Message",
+        "success": "Message sent successfully",
+        "error": "Failed to send message"
+    },
+    "map": {
+        "getDirections": "Get Directions"
+    }
+}

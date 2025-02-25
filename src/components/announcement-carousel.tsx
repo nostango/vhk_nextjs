@@ -4,17 +4,30 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 interface AnnouncementItem {
   id: string
   title: string
-  date: Date
+  start_date: Date
   content: string
 }
 
 export default function AnnouncementCarousel() {
+  const { t, i18n } = useTranslation('common')
   const [announcements, setAnnouncements] = useState<AnnouncementItem[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  // Helper function to extract correct language content
+  const getLocalizedContent = (content: string) => {
+    const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/)
+    const esMatch = content.match(/\[ES\](.*?)(?=$)/)
+    
+    const enContent = enMatch ? enMatch[1].trim() : ''
+    const esContent = esMatch ? esMatch[1].trim() : ''
+    
+    return i18n.language === 'en' ? enContent : esContent
+  }
 
   // 1) Fetch from your "GetSchedule" Lambda endpoint on mount
   useEffect(() => {
@@ -24,14 +37,22 @@ export default function AnnouncementCarousel() {
         const data = await res.json()
         const items = JSON.parse(data.body)
 
-        const filtered = items.filter((item: { CalendarId: string }) => item.CalendarId === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+        interface ScheduleItem {
+          calendarID: string
+          eventID: string
+          event_name: string
+          Timestamp: string
+          description_en?: string
+        }
 
-        // 3) Map to the shape your carousel needs
-        const announcementsData = filtered.map((item: { EventName: string, Timestamp: string, ClassDescriptionEN?: string }) => ({
-          id: item.EventName,           // or some unique ID from DynamoDB
-          title: item.EventName,
-          date: new Date(item.Timestamp),
-          content: item.ClassDescriptionEN || 'No description available',
+        const filtered = items.filter((item: ScheduleItem) => item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
+        
+
+        const announcementsData = filtered.map((item: ScheduleItem) => ({
+          id: item.eventID,           // or some unique ID from DynamoDB
+          title: item.event_name,
+          start_date: new Date(item.Timestamp),
+          content: item.description_en || 'No description available',
         }))
 
         setAnnouncements(announcementsData)
@@ -63,10 +84,14 @@ export default function AnnouncementCarousel() {
     return (
       <Card className="w-full max-w-2xl mx-auto bg-black text-white">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Announcements</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">
+            {t('announcements.title', 'Announcements')}
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-center text-gray-400">No announcements available</p>
+          <p className="text-center text-gray-400">
+            {t('announcements.empty', 'No announcements available')}
+          </p>
         </CardContent>
       </Card>
     )
@@ -75,9 +100,11 @@ export default function AnnouncementCarousel() {
   return (
     <Card className="w-full max-w-2xl mx-auto bg-black text-white">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">Announcements</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">
+          {t('announcements.title', 'Announcements')}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <div className="min-h-[200px] transition-all duration-500 ease-in-out">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
@@ -85,11 +112,11 @@ export default function AnnouncementCarousel() {
                 {announcements[currentIndex].title}
               </h3>
               <span className="text-sm text-gray-400">
-                {format(announcements[currentIndex].date, 'MMM dd, yyyy')}
+                {format(announcements[currentIndex].start_date, 'MMM dd, yyyy')}
               </span>
             </div>
             <p className="text-gray-400">
-              {announcements[currentIndex].content}
+              {getLocalizedContent(announcements[currentIndex].content)}
             </p>
           </div>
         </div>
