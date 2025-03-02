@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 interface AnnouncementItem {
   id: string
   title: string
-  start_date: Date
+  event_date: Date
   content: string
 }
 
@@ -41,7 +41,7 @@ export default function AnnouncementCarousel() {
           calendarID: string
           eventID: string
           event_name: string
-          Timestamp: string
+          event_date: string
           description_en?: string
         }
 
@@ -51,7 +51,7 @@ export default function AnnouncementCarousel() {
         const announcementsData = filtered.map((item: ScheduleItem) => ({
           id: item.eventID,           // or some unique ID from DynamoDB
           title: item.event_name,
-          start_date: new Date(item.Timestamp),
+          event_date: new Date(item.event_date),
           content: item.description_en || 'No description available',
         }))
 
@@ -112,7 +112,9 @@ export default function AnnouncementCarousel() {
                 {announcements[currentIndex].title}
               </h3>
               <span className="text-sm text-gray-400">
-                {format(announcements[currentIndex].start_date, 'MMM dd, yyyy')}
+                {announcements[currentIndex].event_date instanceof Date && !isNaN(announcements[currentIndex].event_date.getTime())
+                    ? format(announcements[currentIndex].event_date, 'MMM dd, yyyy')
+                    : 'Invalid date'}
               </span>
             </div>
             <p className="text-gray-400">
