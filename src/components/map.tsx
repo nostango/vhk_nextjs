@@ -20,8 +20,8 @@ const MapComponent: React.FC = () => {
     });
 
     // The coordinates of the Dojo.
-    const myLatitude = 41.07449909420177; 
-    const myLongitude =  -73.52111546462568; 
+    const myLatitude = 41.09555834766639;
+    const myLongitude =  -73.51990716041077; 
     const zoomLevel = 16;
 
     // Initialize the map with your coordinates.
@@ -36,7 +36,7 @@ const MapComponent: React.FC = () => {
     // Add a marker at the center.
     const marker = L.marker([myLatitude, myLongitude]).addTo(map);
     marker.bindPopup(
-      `<b>VHK Dojo</b><br>48 Union Street, Stamford, CT 06906<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/HmeRzewUCBQm7QWH8">${t('map.getDirections')}</a>`
+      `<b>VHK Dojo</b><br>1086 Hope St, Stamford, CT 06907<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/f65kNp11Eb5yFVNw6">${t('map.getDirections')}</a>`
   ).openPopup();
 
     // Cleanup the map when the component unmounts.
