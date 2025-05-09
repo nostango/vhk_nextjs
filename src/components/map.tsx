@@ -19,9 +19,9 @@ const MapComponent: React.FC = () => {
       shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
     });
 
-    // The coordinates of the Dojo.
-    const myLatitude = 41.09555834766639;
-    const myLongitude =  -73.51990716041077; 
+    // The coordinates of the Dojo. 41.043056943787406, -73.54143616313748
+    const myLatitude = 41.043056943787406;
+    const myLongitude =  -73.54143616313748; 
     const zoomLevel = 16;
 
     // Initialize the map with your coordinates.
@@ -36,7 +36,7 @@ const MapComponent: React.FC = () => {
     // Add a marker at the center.
     const marker = L.marker([myLatitude, myLongitude]).addTo(map);
     marker.bindPopup(
-      `<b>VHK Dojo</b><br>1086 Hope St, Stamford, CT 06907<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/f65kNp11Eb5yFVNw6">${t('map.getDirections')}</a>`
+      `<b>VHK Dojo</b><br>804 Atlantic St, Stamford, CT 06902<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/f65kNp11Eb5yFVNw6">${t('map.getDirections')}</a>`
   ).openPopup();
 
     // Cleanup the map when the component unmounts.
