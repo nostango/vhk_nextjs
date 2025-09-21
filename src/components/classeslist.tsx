@@ -67,7 +67,7 @@ export default function ClassList() {
                     description_es: string;
                     event_color: string;
                     event_name: string;
-                    event_recurr: string;
+                    event_recurr: string[];
                     times: string;
                     event_ages: string
                 }) => {
@@ -76,33 +76,35 @@ export default function ClassList() {
                     }
                     const { calendar_name, description_en, description_es, event_color, event_name, event_recurr, times, event_ages } = item;
 
-                    if (!groupedByDayMap[event_recurr]) {
-                        groupedByDayMap[event_recurr] = {
-                            dayName: event_recurr,
-                            events: [],
-                        };
-                    }
+                    event_recurr.forEach(day => {
+                        if (!groupedByDayMap[day]) {
+                            groupedByDayMap[day] = {
+                                dayName: day,
+                                events: [],
+                            };
+                        }
 
-                    const existingEvent = groupedByDayMap[event_recurr].events.find(e =>
-                        e.eventName === event_name &&
-                        e.times === times &&
-                        e.calendarName === calendar_name
-                    );
+                        const existingEvent = groupedByDayMap[day].events.find(e =>
+                            e.eventName === event_name &&
+                            e.times === times &&
+                            e.calendarName === calendar_name
+                        );
 
-                    if (!existingEvent) {
-                        groupedByDayMap[event_recurr].events.push({
-                            eventName: event_name,
-                            times: times,
-                            description_en: description_en || 'No description available',
-                            description_es: description_es || 'No description available',
-                            eventAges: event_ages || 'No age range provided',
-                            calendarName: calendar_name,
-                            eventColor: event_color || '#ffffff',
-                        });
-                    }
+                        if (!existingEvent) {
+                            groupedByDayMap[day].events.push({
+                                eventName: event_name,
+                                times: times,
+                                description_en: description_en || 'No description available',
+                                description_es: description_es || 'No description available',
+                                eventAges: event_ages || 'No age range provided',
+                                calendarName: calendar_name,
+                                eventColor: event_color || '#ffffff',
+                            });
+                        }
+                    });
                 });
 
-                const dayOrder = ['Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday', 'Every Sunday'];
+                const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
                 const sortedGroupedClasses = Object.values(groupedByDayMap).sort((a, b) => {
                     const indexA = dayOrder.indexOf(a.dayName);
