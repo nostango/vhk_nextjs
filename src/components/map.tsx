@@ -44,7 +44,7 @@ const MapComponent: React.FC = () => {
       map.off();
       map.remove();
     };
-  }, []);
+  });
 
   return <div ref={mapContainerRef} style={{ height: '400px', width: '100%' }} />;
 };

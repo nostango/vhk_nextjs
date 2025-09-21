@@ -37,7 +37,9 @@ export default function ClassList() {
     const parseTime = (timeString: string) => {
         const timePart = timeString.split(' - ')[0];
         const [time, modifier] = timePart.split(' ');
-        let [hours, minutes] = time.split(':').map(Number);
+        let hours;
+        const [h, minutes] = time.split(':').map(Number);
+        hours = h;
 
         if (modifier === 'PM' && hours !== 12) {
             hours += 12;
