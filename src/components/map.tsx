@@ -36,7 +36,7 @@ const MapComponent: React.FC = () => {
     // Add a marker at the center.
     const marker = L.marker([myLatitude, myLongitude]).addTo(map);
     marker.bindPopup(
-      `<b>VHK Dojo</b><br>804 Atlantic St, Stamford, CT 06902<br><a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/f65kNp11Eb5yFVNw6">${t('map.getDirections')}</a>`
+      `<b>VHK Dojo</b><br>804 Atlantic St, Stamford, CT 06902<br><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir//804+Atlantic+St,+Stamford,+CT+06902/@41.0427824,-73.5815171,13z/data=!4m9!4m8!1m0!1m5!1m1!1s0x89c29f5edd49c51d:0x4e9a1b808279735e!2m2!1d-73.5403176!2d41.0427897!3e0?entry=ttu&g_ep=EgoyMDI1MDkxNy4wIKXMDSoASAFQAw%3D%3D">${t('map.getDirections')}</a>`
   ).openPopup();
 
     // Cleanup the map when the component unmounts.
@@ -44,7 +44,7 @@ const MapComponent: React.FC = () => {
       map.off();
       map.remove();
     };
-  }, []);
+  });
 
   return <div ref={mapContainerRef} style={{ height: '400px', width: '100%' }} />;
 };

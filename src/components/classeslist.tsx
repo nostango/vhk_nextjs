@@ -9,15 +9,22 @@ import {
 } from '@/components/ui/card';
 import { useTranslation } from 'react-i18next';
 
-interface GroupedClasses {
-    calendarName: string;
-    eventColor: string;
-    events: { eventName: string; times: string; description_en: string; description_es: string; eventAges: string }[];
+interface GroupedByDay {
+    dayName: string;
+    events: {
+        eventName: string;
+        times: string;
+        description_en: string;
+        description_es: string;
+        eventAges: string;
+        calendarName: string;
+        eventColor: string;
+    }[];
 }
 
 export default function ClassList() {
     const { t, i18n } = useTranslation('common');
-    const [classes, setClasses] = useState<GroupedClasses[]>([]);
+    const [classes, setClasses] = useState<GroupedByDay[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -26,107 +33,107 @@ export default function ClassList() {
         return content || t('classes.noAgeRange');
     };
 
+    // Helper function to parse time for sorting
+    const parseTime = (timeString: string) => {
+        const timePart = timeString.split(' - ')[0];
+        const [time, modifier] = timePart.split(' ');
+        let hours;
+        const [h, minutes] = time.split(':').map(Number);
+        hours = h;
+
+        if (modifier === 'PM' && hours !== 12) {
+            hours += 12;
+        }
+        if (modifier === 'AM' && hours === 12) {
+            hours = 0;
+        }
+        return hours * 60 + minutes;
+    };
+
     useEffect(() => {
         async function fetchClasses() {
-        try {
-            const res = await fetch(
-            'https://moik8i7sua.execute-api.us-east-1.amazonaws.com/default/pullSchedule'
-            );
-            const data = await res.json();
-            const items = JSON.parse(data.body);
-    
-            // Group the classes by calendarID
-            const groupedClassesMap: Record<string, GroupedClasses> = {};
-    
-            items.forEach((item: { 
-            calendarID: string; 
-            calendar_name: string; 
-            description_en: string;
-            description_es: string; 
-            event_color: string; 
-            event_name: string; 
-            event_recurr: string; 
-            times: string; 
-            event_ages: string 
-            }) => {
-                if (item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com') {
-                    return;
-                }
-            const { calendarID, calendar_name, description_en, description_es, event_color, event_name, event_recurr, times, event_ages } = item;
-    
-            if (!groupedClassesMap[calendarID]) {
-                groupedClassesMap[calendarID] = {
-                calendarName: calendar_name,
-                eventColor: event_color || '#ffffff',
-                events: [{
-                    eventName: event_name,
-                    // Build the times string (assuming recurrence contains day info)
-                    times: `${event_recurr} - ${times}`,
-                    description_en: description_en || 'No description available',
-                    description_es: description_es || 'No description available',
-                    eventAges: event_ages || 'No age range provided',
-                }],
-                };
-            } else {
-                const existingEvent = groupedClassesMap[calendarID].events.find(e => 
-                e.eventName === event_name && 
-                e.description_en === description_en && 
-                e.description_es === description_es &&
-                e.eventAges === event_ages
+            try {
+                const res = await fetch(
+                    'https://moik8i7sua.execute-api.us-east-1.amazonaws.com/default/pullSchedule'
                 );
+                const data = await res.json();
+                const items = JSON.parse(data.body);
+
+                // Group the classes by day of the week
+                const groupedByDayMap: Record<string, GroupedByDay> = {};
+
+                items.forEach((item: {
+                    calendarID: string;
+                    calendar_name: string;
+                    description_en: string;
+                    description_es: string;
+                    event_color: string;
+                    event_name: string;
+                    event_recurr: string[];
+                    times: string;
+                    event_ages: string
+                }) => {
+                    if (item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com' || !item.event_recurr) {
+                        return;
+                    }
+                    const { calendar_name, description_en, description_es, event_color, event_name, event_recurr, times, event_ages } = item;
+
+                    event_recurr.forEach(day => {
+                        if (!groupedByDayMap[day]) {
+                            groupedByDayMap[day] = {
+                                dayName: day,
+                                events: [],
+                            };
+                        }
+
+                        const existingEvent = groupedByDayMap[day].events.find(e =>
+                            e.eventName === event_name &&
+                            e.times === times &&
+                            e.calendarName === calendar_name
+                        );
+
                         if (!existingEvent) {
-                            groupedClassesMap[calendarID].events.push({
+                            groupedByDayMap[day].events.push({
                                 eventName: event_name,
-                                times: `${event_recurr} - ${times}`,
+                                times: times,
                                 description_en: description_en || 'No description available',
                                 description_es: description_es || 'No description available',
                                 eventAges: event_ages || 'No age range provided',
+                                calendarName: calendar_name,
+                                eventColor: event_color || '#ffffff',
                             });
                         }
-                    }
                     });
-        
-                    // Define your custom orders
-                    const calendarOrder = ['Kids Kenpo', 'Jr Kenpo', 'Adults Kickboxing']
-                    const dayOrder = ['Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday', 'Every Sunday'];
-            
-                    // Convert the map to an array and sort by the custom calendar order.
-                    const sortedGroupedClasses = Object.values(groupedClassesMap).sort((a, b) => {
-                    // Adjust if necessary (e.g., use toLowerCase() if your data might differ in case)
-                    const indexA = calendarOrder.indexOf(a.calendarName.toLowerCase());
-                    const indexB = calendarOrder.indexOf(b.calendarName.toLowerCase());
+                });
+
+                const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+                const sortedGroupedClasses = Object.values(groupedByDayMap).sort((a, b) => {
+                    const indexA = dayOrder.indexOf(a.dayName);
+                    const indexB = dayOrder.indexOf(b.dayName);
                     return indexA - indexB;
-                    });
-            
-                    // Sort events in each calendar group:
-                    sortedGroupedClasses.forEach(group => {
+                });
+
+                sortedGroupedClasses.forEach(group => {
                     group.events.sort((a, b) => {
-                        // First, sort by event name alphabetically.
-                        const nameComparison = a.eventName.localeCompare(b.eventName);
-                        if (nameComparison !== 0) return nameComparison;
-            
-                        // Next, if the event names are the same, sort by the day of the week.
-                        // Here, we assume that the day is part of the recurrence info in the 'times' string.
-                        // For example, if a.times is "Monday - 10:00 AM", we extract "monday".
-                        const dayA = a.times.split('-')[0].trim().toLowerCase();
-                        const dayB = b.times.split('-')[0].trim().toLowerCase();
-            
-                        return dayOrder.indexOf(dayA) - dayOrder.indexOf(dayB);
+                        const timeA = parseTime(a.times);
+                        const timeB = parseTime(b.times);
+                        return timeA - timeB;
                     });
-                    });
-            
-                    setClasses(sortedGroupedClasses);
-                } catch (err) {
-                    console.error('Error fetching class data:', err);
-                    setError('Failed to load classes');
-                } finally {
-                    setLoading(false);
-                }
-                }
-            
-                fetchClasses();
-            }, []);
-        
+                });
+
+                setClasses(sortedGroupedClasses);
+            } catch (err) {
+                console.error('Error fetching class data:', err);
+                setError('Failed to load classes');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchClasses();
+    }, []);
+
 
     if (loading) return <div>{t('classes.loading')}</div>;
     if (error) return <div className="text-red-500">{t('classes.error')}</div>;
@@ -135,31 +142,32 @@ export default function ClassList() {
     return (
         <div className="flex flex-col items-center w-full">
             {classes.map((klass, index) => (
-                <Card key={index} className="w-full max-w-2xl p-4 bg-dark-100 text-white relative">
-                    {/* Color Circle in Top Right */}
-                    <div 
-                        className="absolute top-5 right-5 w-12 h-12 rounded-full border border-white" 
-                        style={{ backgroundColor: klass.eventColor }}
-                    />
-                    
+                <Card key={index} className="w-full max-w-2xl p-4 bg-dark-100 text-white mb-4">
                     <CardHeader>
-                        <CardTitle>{klass.calendarName}</CardTitle>
+                        <CardTitle>{klass.dayName}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {klass.events.map((event, idx) => (
                             <div key={idx} className="mb-4">
                                 <div className="flex flex-col">
+                                    <div className="flex items-center mb-1">
+                                        <div
+                                            className="w-4 h-4 rounded-full mr-2 border border-white"
+                                            style={{ backgroundColor: event.eventColor }}
+                                        />
+                                        <h4 className="text-l font-semibold">{event.calendarName}</h4>
+                                    </div>
                                     <h3 className="text-xl font-bold mb-1">{event.eventName}</h3>
                                     <p className="text-sm text-gray-400 mb-1">{getAgeContent(event.eventAges)}</p>
                                     <p className="text-sm mb-2">{event.times}</p>
                                 </div>
                                 <p className="mt-2">
-                                    {i18n.language === 'en' ? 
+                                    {i18n.language === 'en' ?
                                         event.description_en
                                             .replace(/\[AGES\].*?\[\/AGES\]/g, '')
                                             .replace(/\[EN\]/g, '')
                                             .replace(/\[ES\].*$/g, '')
-                                            .trim() : 
+                                            .trim() :
                                         event.description_es
                                             .replace(/\[AGES\].*?\[\/AGES\]/g, '')
                                             .replace(/\[ES\]/g, '')
