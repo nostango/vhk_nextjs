@@ -20,8 +20,8 @@ export default function AnnouncementCarousel() {
 
   // Helper function to extract correct language content
   const getLocalizedContent = (content: string) => {
-    const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/)
-    const esMatch = content.match(/\[ES\](.*?)(?=$)/)
+    const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/s)
+    const esMatch = content.match(/\[ES\](.*?)(?=$)/s)
     
     const enContent = enMatch ? enMatch[1].trim() : ''
     const esContent = esMatch ? esMatch[1].trim() : ''
@@ -43,17 +43,23 @@ export default function AnnouncementCarousel() {
           event_name: string
           event_date: string
           description_en?: string
+          description_es?: string
         }
 
         const filtered = items.filter((item: ScheduleItem) => item.calendarID === '78c5bb3dc9f2cd865fe0b1e751d441833e7eecbf8f9e100e0da21afefd68aece@group.calendar.google.com')
-        
 
-        const announcementsData = filtered.map((item: ScheduleItem) => ({
-          id: item.eventID,           // or some unique ID from DynamoDB
-          title: item.event_name,
-          event_date: new Date(item.event_date),
-          content: item.description_en || 'No description available',
-        }))
+        const announcementsData = filtered.map((item: ScheduleItem) => {
+          const enPart = item.description_en || '';
+          const esPart = item.description_es ? `[ES]${item.description_es}` : '';
+          const combinedContent = `${enPart}${esPart}`;
+
+          return {
+            id: item.eventID,           // or some unique ID from DynamoDB
+            title: item.event_name,
+            event_date: new Date(item.event_date),
+            content: combinedContent || 'No description available',
+          }
+        })
 
         setAnnouncements(announcementsData)
       } catch (error) {
