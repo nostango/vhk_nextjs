@@ -20,8 +20,8 @@ export default function AnnouncementCarousel() {
 
   // Helper function to extract correct language content
   const getLocalizedContent = (content: string) => {
-    const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/)
-    const esMatch = content.match(/\[ES\](.*?)(?=$)/)
+    const enMatch = content.match(/\[EN\](.*?)(?=\[ES\]|$)/s)
+    const esMatch = content.match(/\[ES\](.*?)(?=$)/s)
     
     const enContent = enMatch ? enMatch[1].trim() : ''
     const esContent = esMatch ? esMatch[1].trim() : ''
