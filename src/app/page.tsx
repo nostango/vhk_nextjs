@@ -7,9 +7,9 @@ import AnnouncementCarousel from '@/components/announcement-carousel';
 import InstructorSummary from '@/components/instructor-summary';
 import ClassList from '@/components/classeslist';
 import TodayClasses from '@/components/currentclasses';
-import cInstructorImage from '/public/images/c_instructor.jpg';
-import yInstructorImage from '/public/images/y_instructor.jpg';
-import aInstructorImage from '/public/images/a_instructor.jpg';
+import cInstructorImage from '../../public/images/c_instructor.jpg';
+import yInstructorImage from '../../public/images/y_instructor.jpg';
+import aInstructorImage from '../../public/images/a_instructor.jpg';
 import dynamic from 'next/dynamic';
 import ContactForm from '@/components/contact-form';
 
@@ -49,6 +49,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <NavbarComponent />
+      <iframe src="https://www.youtube.com/embed/19g66ezsKAg" allowFullScreen />
       <div className="container mx-auto px-4">
         <div className="flex flex-col space-y-6 my-12">
           <Suspense fallback={<div>Loading announcements...</div>}>
