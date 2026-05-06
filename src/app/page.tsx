@@ -54,7 +54,7 @@ export default function Home() {
       <div className="relative w-full flex-1 min-h-[50vh]">
         <iframe 
           className="absolute inset-0 w-full h-full border-none"
-          src="https://www.youtube.com/embed/19g66ezsKAg" 
+          src="https://www.youtube.com/watch?v=7g7krDMhLEY" 
           allowFullScreen 
         />
       </div>
@@ -69,9 +69,7 @@ export default function Home() {
           </Suspense>
 
           <div id='calendar' className="flex justify-center items-center">
-            <MacCard className="p-4 bg-white">
-              <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&showTitle=0&showNav=0&showCalendars=0&showTabs=0&showTz=0&src=Zjg0ZDBhZTY0ZGI2ODRmMmQ5N2FkNzQ0MDYxZGU1MTNhYmNhODJlYjYxYzVmNDc2MGE5M2RjZTFjY2MyMjg1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NzhjNWJiM2RjOWYyY2Q4NjVmZTBiMWU3NTFkNDQxODMzZTdlZWNiZjhmOWUxMDBlMGRhMjFhZmVmZDY4YWVjZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Zjg1YjcwYzdkMjBkOTI2ZTQ4YWExMjZmN2JiYzI4NDUyZjhmOTU5MDA1MzJlYTQ2YWUzN2FhYTVlYzg4ZmExZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFlNzljMDI0YWQ5ZDliNDk1NTdiZDVkYWUyZTQyZTE5ZDFmNzQ1NWNhOTkxMDczMmQzMjYzODQ4MDg2ZWQ3MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NjZjNzAxZWUxYTRlYzMzNjhlODI0YmUzZjhhNDdlNjBiYjIzZTM5ZGVjMDFkNjU3YWMyZGNjNTZmYWI1ZmYxMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23d50000&color=%233f51b5&color=%23616161&color=%238e24aa&color=%230b8043&color=%230b8043" style={{ border: 'solid 0px'}} width="800" height="600" frameBorder="0" scrolling="no"></iframe>
-            </MacCard>
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&showTitle=0&showNav=0&showCalendars=0&showTabs=0&showTz=0&src=Zjg0ZDBhZTY0ZGI2ODRmMmQ5N2FkNzQ0MDYxZGU1MTNhYmNhODJlYjYxYzVmNDc2MGE5M2RjZTFjY2MyMjg1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NzhjNWJiM2RjOWYyY2Q4NjVmZTBiMWU3NTFkNDQxODMzZTdlZWNiZjhmOWUxMDBlMGRhMjFhZmVmZDY4YWVjZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Zjg1YjcwYzdkMjBkOTI2ZTQ4YWExMjZmN2JiYzI4NDUyZjhmOTU5MDA1MzJlYTQ2YWUzN2FhYTVlYzg4ZmExZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFlNzljMDI0YWQ5ZDliNDk1NTdiZDVkYWUyZTQyZTE5ZDFmNzQ1NWNhOTkxMDczMmQzMjYzODQ4MDg2ZWQ3MUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NjZjNzAxZWUxYTRlYzMzNjhlODI0YmUzZjhhNDdlNjBiYjIzZTM5ZGVjMDFkNjU3YWMyZGNjNTZmYWI1ZmYxMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23d50000&color=%233f51b5&color=%23616161&color=%238e24aa&color=%230b8043&color=%230b8043" style={{ border: 'solid 0px'}} width="800" height="600" frameBorder="0" scrolling="no"></iframe>
           </div>
 
           <div id='classes'>
