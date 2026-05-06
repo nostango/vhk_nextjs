@@ -1,13 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardContent,
-} from '@/components/ui/card';
+import { MacCard } from '@/components/ui/mac-card';
 import { useTranslation } from 'react-i18next';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface GroupedByDay {
     dayName: string;
@@ -21,6 +18,68 @@ interface GroupedByDay {
         eventColor: string;
     }[];
 }
+
+const ClassEvent = ({ event, i18n, getAgeContent }: { event: GroupedByDay['events'][0], i18n: any, getAgeContent: any }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <div className="mb-4 last:mb-0">
+            <div 
+                className="flex flex-col cursor-pointer group" 
+                onClick={() => setIsExpanded(!isExpanded)}
+            >
+                <div className="flex justify-between items-start">
+                    <div className="flex flex-col">
+                        <div className="flex items-center mb-1">
+                            <div
+                                className="w-3 h-3 rounded-full mr-2 border border-white/20"
+                                style={{ backgroundColor: event.eventColor }}
+                            />
+                            <h4 className="text-sm font-semibold text-gray-400">{event.calendarName}</h4>
+                        </div>
+                        <h3 className="text-xl font-bold mb-1 text-white group-hover:text-gray-200 transition-colors">
+                            {event.eventName}
+                        </h3>
+                        <p className="text-xs text-gray-500 mb-1">{getAgeContent(event.eventAges)}</p>
+                        <p className="text-sm text-gray-300">{event.times}</p>
+                    </div>
+                    <ChevronDown
+                        className={cn(
+                            "h-5 w-5 text-gray-600 transition-transform duration-300 mt-2",
+                            isExpanded && "rotate-180"
+                        )}
+                    />
+                </div>
+            </div>
+
+            {/* Expandable Description */}
+            <div
+                className={cn(
+                    "grid transition-all duration-300 ease-in-out",
+                    isExpanded ? "grid-rows-[1fr] opacity-100 mt-3 pt-3 border-t border-white/5" : "grid-rows-[0fr] opacity-0"
+                )}
+            >
+                <div className="overflow-hidden">
+                    <p className="text-sm text-gray-400 leading-relaxed italic">
+                        {i18n.language === 'en' ?
+                            event.description_en
+                                .replace(/\[AGES\].*?\[\/AGES\]/g, '')
+                                .replace(/\[EN\]/g, '')
+                                .replace(/\[ES\].*$/g, '')
+                                .trim() :
+                            event.description_es
+                                .replace(/\[AGES\].*?\[\/AGES\]/g, '')
+                                .replace(/\[ES\]/g, '')
+                                .replace(/\[EN\].*\[ES\]/g, '')
+                                .trim()
+                        }
+                    </p>
+                </div>
+            </div>
+            <hr className="mt-4 border-white/5 last:hidden" />
+        </div>
+    );
+};
 
 export default function ClassList() {
     const { t, i18n } = useTranslation('common');
@@ -142,44 +201,21 @@ export default function ClassList() {
     return (
         <div className="flex flex-col items-center w-full">
             {classes.map((klass, index) => (
-                <Card key={index} className="w-full max-w-2xl p-4 bg-dark-100 text-white mb-4">
-                    <CardHeader>
-                        <CardTitle>{klass.dayName}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
+                <MacCard key={index} className="w-full max-w-2xl p-6 mb-6">
+                    <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+                        {klass.dayName}
+                    </h2>
+                    <div className="space-y-6">
                         {klass.events.map((event, idx) => (
-                            <div key={idx} className="mb-4">
-                                <div className="flex flex-col">
-                                    <div className="flex items-center mb-1">
-                                        <div
-                                            className="w-4 h-4 rounded-full mr-2 border border-white"
-                                            style={{ backgroundColor: event.eventColor }}
-                                        />
-                                        <h4 className="text-l font-semibold">{event.calendarName}</h4>
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-1">{event.eventName}</h3>
-                                    <p className="text-sm text-gray-400 mb-1">{getAgeContent(event.eventAges)}</p>
-                                    <p className="text-sm mb-2">{event.times}</p>
-                                </div>
-                                <p className="mt-2">
-                                    {i18n.language === 'en' ?
-                                        event.description_en
-                                            .replace(/\[AGES\].*?\[\/AGES\]/g, '')
-                                            .replace(/\[EN\]/g, '')
-                                            .replace(/\[ES\].*$/g, '')
-                                            .trim() :
-                                        event.description_es
-                                            .replace(/\[AGES\].*?\[\/AGES\]/g, '')
-                                            .replace(/\[ES\]/g, '')
-                                            .replace(/\[EN\].*\[ES\]/g, '')
-                                            .trim()
-                                    }
-                                </p>
-                                {idx !== klass.events.length - 1 && <hr className="my-2" />}
-                            </div>
+                            <ClassEvent 
+                                key={idx} 
+                                event={event} 
+                                i18n={i18n} 
+                                getAgeContent={getAgeContent} 
+                            />
                         ))}
-                    </CardContent>
-                </Card>
+                    </div>
+                </MacCard>
             ))}
         </div>
     );
