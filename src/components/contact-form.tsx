@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { MacCard } from '@/components/ui/mac-card';
 import { useTranslation } from 'react-i18next';
 
 
@@ -45,69 +45,67 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
 };
 
 return (
-    <Card className="w-full max-w-2xl mx-auto bg-black text-white">
-    <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-        {t('contact.title', 'Contact Us')}
-        </CardTitle>
-    </CardHeader>
-    <CardContent>
+    <MacCard className="w-full max-w-2xl mx-auto p-8">
+        <h2 className="text-2xl font-bold text-center text-white mb-8 border-b border-white/10 pb-4">
+            {t('contact.title', 'Contact Us')}
+        </h2>
+        
         {message && (
-            <div className={`text-center font-bold ${message.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+            <div className={`text-center font-bold mb-6 p-3 rounded-lg ${message.type === 'success' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
                 {message.text}
             </div>
         )}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-2">
-            {t('contact.name', 'Name')}
+            <label htmlFor="name" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">
+                {t('contact.name', 'Name')}
             </label>
             <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-2 bg-black text-white border-b-2 border-gray-700 focus:border-white focus:outline-none font-bold"
-            required
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full p-3 bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:bg-white/10 focus:outline-none transition-all"
+                required
             />
         </div>
         <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-2">
-            {t('contact.email', 'Email')}
+            <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">
+                {t('contact.email', 'Email')}
             </label>
             <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full p-2 bg-black text-white border-b-2 border-gray-700 focus:border-white focus:outline-none font-bold"
-            required
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:bg-white/10 focus:outline-none transition-all"
+                required
             />
         </div>
         <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-2">
-            {t('contact.message', 'Message')}
+            <label htmlFor="message" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">
+                {t('contact.message', 'Message')}
             </label>
             <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows={4}
-            className="w-full p-2 bg-black text-white border-b-2 border-gray-700 focus:border-white focus:outline-none font-bold"
-            required
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={4}
+                className="w-full p-3 bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:bg-white/10 focus:outline-none transition-all resize-none"
+                required
             />
         </div>
         <button
             type="submit"
-            className="w-full py-2 px-4 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition-colors"
+            className="w-full py-4 px-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all shadow-lg"
         >
             {t('contact.submit', 'Send Message')}
         </button>
         </form>
-    </CardContent>
-    </Card>
+    </MacCard>
 );
 }

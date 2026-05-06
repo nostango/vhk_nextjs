@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { MacCard } from '@/components/ui/mac-card'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
@@ -76,7 +76,7 @@ export default function AnnouncementCarousel() {
 
     const interval = setInterval(() => {
       setCurrentIndex((current) => (current + 1) % announcements.length)
-    }, 3000)
+    }, 5000) // Increased to 5s for better reading
 
     return () => clearInterval(interval)
   }, [announcements.length])
@@ -88,66 +88,59 @@ export default function AnnouncementCarousel() {
 
   if (announcements.length === 0) {
     return (
-      <Card className="w-full max-w-2xl mx-auto bg-black text-white">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            {t('announcements.title', 'Announcements')}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-center text-gray-400">
-            {t('announcements.empty', 'No announcements available')}
-          </p>
-        </CardContent>
-      </Card>
+      <MacCard className="w-full max-w-2xl mx-auto p-6">
+        <h2 className="text-2xl font-bold text-center text-white mb-4 border-b border-white/10 pb-4">
+          {t('announcements.title', 'Announcements')}
+        </h2>
+        <p className="text-center text-gray-500 italic py-8">
+          {t('announcements.empty', 'No announcements available')}
+        </p>
+      </MacCard>
     )
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-black text-white">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
+    <MacCard className="w-full max-w-2xl mx-auto p-8 relative overflow-hidden group">
+      <div className="flex flex-col items-center">
+        <h2 className="text-sm font-bold text-gray-500 uppercase tracking-[0.2em] mb-6">
           {t('announcements.title', 'Announcements')}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="min-h-[200px] transition-all duration-500 ease-in-out">
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xl font-semibold">
-                {announcements[currentIndex].title}
-              </h3>
-              <span className="text-sm text-gray-400">
-                {announcements[currentIndex].event_date instanceof Date && !isNaN(announcements[currentIndex].event_date.getTime())
-                    ? format(announcements[currentIndex].event_date, 'MMM dd, yyyy')
-                    : 'Invalid date'}
-              </span>
-            </div>
-            <p className="text-gray-400">
-              {getLocalizedContent(announcements[currentIndex].content)}
-            </p>
-          </div>
+        </h2>
+        
+        <div className="w-full min-h-[160px] flex flex-col items-center text-center transition-all duration-700">
+          <span className="text-xs font-medium text-gray-600 mb-2 uppercase tracking-wider">
+            {announcements[currentIndex].event_date instanceof Date && !isNaN(announcements[currentIndex].event_date.getTime())
+                ? format(announcements[currentIndex].event_date, 'MMMM dd, yyyy')
+                : 'Invalid date'}
+          </span>
+          
+          <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
+            {announcements[currentIndex].title}
+          </h3>
+          
+          <p className="text-gray-400 text-base leading-relaxed max-w-lg">
+            {getLocalizedContent(announcements[currentIndex].content)}
+          </p>
         </div>
 
         {/* Pagination dots */}
         {announcements.length > 1 && (
-          <div className="flex justify-center gap-2 pt-4">
+          <div className="flex justify-center gap-3 pt-8">
             {announcements.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
+                  "w-1.5 h-1.5 rounded-full transition-all duration-500",
                   index === currentIndex
-                    ? "bg-white scale-125"
-                    : "bg-gray-400 hover:bg-white/50"
+                    ? "bg-white w-4"
+                    : "bg-gray-700 hover:bg-gray-500"
                 )}
                 aria-label={`Go to announcement ${index + 1}`}
               />
             ))}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </MacCard>
   )
 }
