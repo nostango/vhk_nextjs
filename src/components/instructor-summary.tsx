@@ -21,6 +21,7 @@ export default function InstructorSummary({ instructors }: InstructorSummaryProp
     <section className="container mx-auto px-4 grid md:grid-cols-3 gap-8 items-start">
       {instructors.map((instructor, index) => (
           <ProfileCard
+            key={index}
             imageSrc={instructor.imageUrl as string}
             caption={instructor.name}
             description={instructor.biography[i18n.language as keyof typeof instructor.biography]}

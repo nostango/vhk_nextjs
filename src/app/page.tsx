@@ -54,7 +54,7 @@ export default function Home() {
       <div className="relative w-full flex-1 min-h-[50vh]">
         <iframe 
           className="absolute inset-0 w-full h-full border-none"
-          src="https://www.youtube.com/watch?v=7g7krDMhLEY" 
+          src="https://www.youtube.com/embed/7g7krDMhLEY" 
           allowFullScreen 
         />
       </div>
