@@ -102,11 +102,6 @@ export const NavbarComponent = () => {
 
         {/* Desktop Navigation Items (Centered Below Logo) */}
         {/* This section is already handled by the Desktop Menu above with `md:flex` and `mt-4` */}
-
-        {/* White Line Divider */}
-        <div className="w-[80%] h-px bg-white mx-auto"></div>
-
-
         {/* Mobile Menu */}
         <div
           id="mobile-menu"
